@@ -408,8 +408,60 @@ public class AnalizadorSintactico {
         Termino termino = esTermino();
         if (termino != null) {
             obtenerSiguienteToken();
+
+            if (tokenActual.getCategoria() == Categoria.OPERADOR_RELACIONAL) {
+                Token operadorRelacional = tokenActual;
+                obtenerSiguienteToken();
+
+                Termino termino1 = esTermino();
+                if (termino1 != null) {
+                    return new ExpresionRelacional(termino, operadorRelacional, termino1);
+                } else {
+                    reportarError("Falta un termino para completar la expresión relacional");
+                }
+            } else {
+                reportarError("Falta un operador relacional en la expresión");
+
+            }
+
+        } else {
+            reportarError("Falta un termino para completar la expresión relacional");
+
         }
         return null;
+    }
+
+    public SentanciaDecision esSentanciaDecision() {
+
+        if (tokenActual.getLexema().equals("Si")) {
+            obtenerSiguienteToken();
+            ExpresionRelacional expresionRelacional = esExpresionRelacional();
+
+            if (expresionRelacional != null) {
+                obtenerSiguienteToken();
+
+                if (tokenActual.getLexema().equals("hacer")) {
+                    obtenerSiguienteToken();
+
+                    ArrayList<Sentencia> listaSentencias = eslistaSentencia();
+                    if (listaSentencias != null) {
+                        obtenerSiguienteToken();
+
+                        if (tokenActual.getLexema().equals("FinSi")) {
+                            return new SentanciaDecision(expresionRelacional, listaSentencias);
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return null;
+
     }
 
     public ArrayList<Funcion> esListaFunciones() {
