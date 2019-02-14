@@ -318,6 +318,8 @@ public class AnalizadorSintactico {
                                     if (tokenActual.getLexema().equals("n")) {
                                         if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                                             return new Funcion(identificador, tipoRetorno, listaParametro, listaSentencias);
+                                        } else {
+                                            reportarError("Falta fin de sentencia");
                                         }
                                     }
                                 }
@@ -397,9 +399,17 @@ public class AnalizadorSintactico {
     }
 
     private Sentencia esSentencia() {
-      
-            
-        
+        // if(tokenActual)
+
+        return null;
+    }
+
+    public ExpresionRelacional esExpresionRelacional() {
+        Termino termino = esTermino();
+        if (termino != null) {
+            obtenerSiguienteToken();
+        }
+        return null;
     }
 
     public ArrayList<Funcion> esListaFunciones() {

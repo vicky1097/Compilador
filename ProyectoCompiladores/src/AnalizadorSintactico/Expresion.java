@@ -12,7 +12,7 @@ package AnalizadorSintactico;
 class Expresion {
     private ExpresionAritmetica expresionAritmetica;
     private ExpresionCadena expresionCadena;
-    private SentanciaRelacional expresionRelacionar;
+    private ExpresionRelacional expresionRelacionar;
     private ExpresioAsignacion expresionAsignacion;
 
     public Expresion(ExpresionAritmetica expresionAritmetica) {
@@ -23,7 +23,7 @@ class Expresion {
         this.expresionCadena = expresionCadena;
     }
 
-    public Expresion(SentanciaRelacional expresionRelacionar) {
+    public Expresion(ExpresionRelacional expresionRelacionar) {
         this.expresionRelacionar = expresionRelacionar;
     }
 

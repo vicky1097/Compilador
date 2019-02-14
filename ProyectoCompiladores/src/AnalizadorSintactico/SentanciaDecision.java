@@ -13,17 +13,17 @@ import java.util.ArrayList;
  */
 public class SentanciaDecision {
     
-    private SentanciaRelacional sentenciaRelacional;
+    private ExpresionRelacional sentenciaRelacional;
     private ArrayList<Sentencia> listaSentencia;
     private ArrayList<Sentencia>listaSentencia1;
     
 
-    public SentanciaDecision(SentanciaRelacional sentenciaRelacional, ArrayList<Sentencia> listaSentencia) {
+    public SentanciaDecision(ExpresionRelacional sentenciaRelacional, ArrayList<Sentencia> listaSentencia) {
         this.sentenciaRelacional = sentenciaRelacional;
         this.listaSentencia = listaSentencia;
     }
 
-    public SentanciaDecision(SentanciaRelacional sentenciaRelacional, ArrayList<Sentencia> listaSentencia, ArrayList<Sentencia> listaSentencia1) {
+    public SentanciaDecision(ExpresionRelacional sentenciaRelacional, ArrayList<Sentencia> listaSentencia, ArrayList<Sentencia> listaSentencia1) {
         this.sentenciaRelacional = sentenciaRelacional;
         this.listaSentencia = listaSentencia;
         this.listaSentencia1 = listaSentencia1;

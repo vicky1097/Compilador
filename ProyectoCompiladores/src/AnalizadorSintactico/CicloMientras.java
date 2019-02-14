@@ -12,10 +12,10 @@ import java.util.ArrayList;
  * @author Vicky
  */
 class CicloMientras {
-    private SentanciaRelacional sentenciaRelacional;
+    private ExpresionRelacional sentenciaRelacional;
     private ArrayList<Sentencia> listaSentencias;
 
-    public CicloMientras(SentanciaRelacional sentenciaRelacional) {
+    public CicloMientras(ExpresionRelacional sentenciaRelacional) {
         this.sentenciaRelacional = sentenciaRelacional;
     }
 

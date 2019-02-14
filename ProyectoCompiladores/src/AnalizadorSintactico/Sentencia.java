@@ -12,7 +12,7 @@ package AnalizadorSintactico;
 class Sentencia {
 
     private SentanciaDecision sentenciaDecision;
-    private SentanciaRelacional sentenciaRelacional;
+    private ExpresionRelacional sentenciaRelacional;
     private DeclaracionCampo declaracionCampo;
     private Expresion expresion;
     private ImprimirDato imprimirDato;
@@ -24,7 +24,7 @@ class Sentencia {
         this.sentenciaDecision = sentenciaDecision;
     }
 
-    public Sentencia(SentanciaRelacional sentenciaRelacional) {
+    public Sentencia(ExpresionRelacional sentenciaRelacional) {
         this.sentenciaRelacional = sentenciaRelacional;
     }
 

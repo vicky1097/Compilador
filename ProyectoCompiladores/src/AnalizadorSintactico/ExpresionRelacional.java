@@ -5,19 +5,23 @@
  */
 package AnalizadorSintactico;
 
+import AnalizadorLexico.Token;
+
 /**
  *
  * @author Vicky
  */
-class SentanciaRelacional {
+class ExpresionRelacional {
+
     private Termino termino1;
     private Termino termino2;
+    private Token operadorRelacional;
+    //op Relacional
 
-    public SentanciaRelacional(Termino termino1, Termino termino2) {
+    public ExpresionRelacional(Termino termino1, Token operadorRelacional, Termino termino2) {
         this.termino1 = termino1;
         this.termino2 = termino2;
+        this.operadorRelacional = operadorRelacional;
     }
-    
-    
-    
+
 }
