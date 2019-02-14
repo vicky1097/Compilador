@@ -448,7 +448,20 @@ public class AnalizadorSintactico {
                         obtenerSiguienteToken();
 
                         if (tokenActual.getLexema().equals("FinSi")) {
-                            return new SentanciaDecision(expresionRelacional, listaSentencias);
+                            obtenerSiguienteToken();
+
+                            if (!tokenActual.getLexema().equals("Sino")) {
+                                return new SentanciaDecision(expresionRelacional, listaSentencias);
+
+                            } else {
+                                ArrayList<Sentencia> listaSentencia1 = eslistaSentencia();
+                                if (listaSentencia1 != null) {
+                                    obtenerSiguienteToken();
+                                    if (tokenActual.getLexema().equals("FinSino")) {
+                                        return new SentanciaDecision(expresionRelacional, listaSentencias, listaSentencia1);
+                                    }
+                                }
+                            }
 
                         }
 
@@ -462,6 +475,102 @@ public class AnalizadorSintactico {
 
         return null;
 
+    }
+
+    public ImprimirDato esImprimirDato() {
+
+        if (tokenActual.getLexema().equals("Imprimir")) {
+            obtenerSiguienteToken();
+
+            if (tokenActual.getCategoria() == Categoria.PARENTESIS_ABRIR) {
+                obtenerSiguienteToken();
+
+                Termino termino = esTermino();
+                if (termino != null) {
+                    obtenerSiguienteToken();
+                    if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
+                        obtenerSiguienteToken();
+
+                        if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
+                            return new ImprimirDato(termino);
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public CicloMientras esCicloMientras() {
+
+        if (tokenActual.getLexema().equals("Mientras")) {
+            obtenerSiguienteToken();
+
+            ExpresionRelacional expresionRelacional = esExpresionRelacional();
+            if (expresionRelacional != null) {
+                obtenerSiguienteToken();
+
+                if (tokenActual.getLexema().equals("hacer")) {
+                    obtenerSiguienteToken();
+
+                    ArrayList<Sentencia> listaSentencias = eslistaSentencia();
+                    if (listaSentencias != null) {
+                        obtenerSiguienteToken();
+
+                        if (tokenActual.getLexema().equals("FinMientras")) {
+                            return new CicloMientras(expresionRelacional, listaSentencias);
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+
+        return null;
+
+    }
+
+    public Retorno esRetorno() {
+
+        if (tokenActual.getLexema().equals("retorno")) {
+            obtenerSiguienteToken();
+
+            Termino termino = esTermino();
+            if (termino != null) {
+                obtenerSiguienteToken();
+
+                if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
+                    return new Retorno(termino);
+                }
+            }
+
+        }
+
+        return null;
+    }
+
+    public LeerDato esLeerDato() {
+
+        if (tokenActual.getCategoria() == Categoria.IDENTIFICADOR) {
+            Token identificador = tokenActual;
+            obtenerSiguienteToken();
+
+            if (tokenActual.getCategoria() == Categoria.PUNTO) {
+                obtenerSiguienteToken();
+
+                if (tokenActual.getLexema().equals("leer")) {
+                    return new LeerDato(identificador);
+
+                }
+            }
+
+        }
+
+        return null;
     }
 
     public ArrayList<Funcion> esListaFunciones() {

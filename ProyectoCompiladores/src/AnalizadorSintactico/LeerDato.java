@@ -5,14 +5,16 @@
  */
 package AnalizadorSintactico;
 
+import AnalizadorLexico.Token;
+
 /**
  *
  * @author Vicky
  */
 class LeerDato {
-    private Termino termino;
+    private Token termino;
 
-    public LeerDato(Termino termino) {
+    public LeerDato(Token termino) {
         this.termino = termino;
     }
     
