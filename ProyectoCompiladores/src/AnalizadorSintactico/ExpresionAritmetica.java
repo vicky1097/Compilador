@@ -1,8 +1,9 @@
 package AnalizadorSintactico;
 
 import AnalizadorLexico.Token;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-public class ExpresionAritmetica {
+public class ExpresionAritmetica extends Expresion{
 
     private ExpresionAritmetica expresionAritmetica1, expresionAritmetica2;
     private Token operadorAritmetico;
@@ -73,6 +74,11 @@ public class ExpresionAritmetica {
             return expresionAritmetica1.toString() + " " + operadorAritmetico.toString() + " " + expresionAritmetica2.toString();
         }
 
+    }
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

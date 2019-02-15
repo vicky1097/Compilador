@@ -6,11 +6,17 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class Termino {
 
     private Token termino;
+    private Invocacion invocacion;
 
     public Termino(Token termino) {
         super();
         this.termino = termino;
     }
+
+    public Termino(Invocacion invocacion) {
+        this.invocacion = invocacion;
+    }
+    
 
     public Token getTermino() {
         return termino;

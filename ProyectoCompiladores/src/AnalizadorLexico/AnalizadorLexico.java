@@ -37,13 +37,29 @@ public class AnalizadorLexico {
                 System.out.println("2");
                 continue;
             }
-            if (esPalabraReservada()) {
-                System.out.println("3");
-                continue;
-            }
+//            if (esPalabraReservada()) {
+//                System.out.println("3");
+//                continue;
+//            }
 
             if (esIdentificador()) {
                 System.out.println("4");
+                continue;
+            }
+            if (esTipoCadena()) {
+                System.out.println("cadena");
+                continue;
+            }
+            if (esTipoCaracter()) {
+                System.out.println("caracter");
+                continue;
+            }
+            if (esTipoEntero()) {
+                System.out.println("entero");
+                continue;
+            }
+            if (esTipoDoble()) {
+                System.out.println("doble");
                 continue;
             }
             if (esCadena()) {
@@ -552,16 +568,19 @@ public class AnalizadorLexico {
         while (Character.isDigit(caracterActual)) {
             lexema += caracterActual;
             darSiguienteCaracter();
+            System.out.println("llll");
         }
 
         if (caracterActual == '.' || caracterActual == 'b') {
             hacerBacktracking(pos);
             return false;
 
-        }
+        } else {
+            almacenarSimbolo(lexema, fila, columna, Categoria.ENTERO);
+            darSiguienteCaracter();
 
-        almacenarSimbolo(lexema, fila, columna, Categoria.ENTERO);
-        return true;
+        }
+      return true;
     }
 
     /*
@@ -663,12 +682,12 @@ public class AnalizadorLexico {
 
         if (caracterActual == '>') {
             lexema += caracterActual;
-            System.out.println(lexema + "primer > ");
+
             darSiguienteCaracter();
 
             if (caracterActual == '>') {
                 lexema += caracterActual;
-                System.out.println(lexema + "segundo > ");
+
                 darSiguienteCaracter();
 
                 if (caracterActual == ':') {
@@ -686,18 +705,17 @@ public class AnalizadorLexico {
 
         } else if (caracterActual == '<') {
             lexema += caracterActual;
-            System.out.println("primer < " + lexema);
+
             darSiguienteCaracter();
 
             if (caracterActual == '<') {
                 lexema += caracterActual;
-                System.out.println("Segundo < " + lexema);
+
                 darSiguienteCaracter();
-                System.out.println(lexema + "R1");
 
                 if (caracterActual == ':') {
                     lexema += caracterActual;
-                    System.out.println("entro a : " + lexema);
+
                     almacenarSimbolo(lexema, fila, columna, Categoria.OPERADOR_RELACIONAL);
                     darSiguienteCaracter();
                     System.out.println(caracterActual + "R2");
@@ -1267,6 +1285,219 @@ public class AnalizadorLexico {
         }
 
         return true;
+    }
+
+    public boolean esTipoEntero() {
+        String lexema = "";
+        int fila = filActual;
+        int columna = colActual;
+        int pos = posInicial;
+        if (caracterActual == 'e') {
+            lexema += caracterActual;
+            darSiguienteCaracter();
+            if (caracterActual == 'n') {
+                lexema += caracterActual;
+                darSiguienteCaracter();
+
+                if (caracterActual == 't') {
+                    lexema += caracterActual;
+                    darSiguienteCaracter();
+
+                    if (caracterActual == 'e') {
+                        lexema += caracterActual;
+                        darSiguienteCaracter();
+
+                        if (caracterActual == 'r') {
+                            lexema += caracterActual;
+                            darSiguienteCaracter();
+
+                            if (caracterActual == 'o') {
+
+                                lexema += caracterActual;
+                                almacenarSimbolo(lexema, fila, columna, Categoria.TIPO_DATO_ENTERO);
+                                darSiguienteCaracter();
+                            } else {
+                                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_ENTERO);
+                            }
+                        } else {
+                            reportarError(lexema, fila, columna, Categoria.TIPO_DATO_ENTERO);
+                        }
+                    } else {
+                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_ENTERO);
+                    }
+                } else {
+                    reportarError(lexema, fila, columna, Categoria.TIPO_DATO_ENTERO);
+                }
+            } else {
+                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_ENTERO);
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean esTipoDoble() {
+        String lexema = "";
+        int fila = filActual;
+        int columna = colActual;
+        int pos = posInicial;
+        if (caracterActual == 'd') {
+            lexema += caracterActual;
+            darSiguienteCaracter();
+
+            if (caracterActual == 'o') {
+                lexema += caracterActual;
+                darSiguienteCaracter();
+
+                if (caracterActual == 'b') {
+                    lexema += caracterActual;
+                    darSiguienteCaracter();
+
+                    if (caracterActual == 'l') {
+                        lexema += caracterActual;
+                        darSiguienteCaracter();
+
+                        if (caracterActual == 'e') {
+
+                            lexema += caracterActual;
+                            almacenarSimbolo(lexema, fila, columna, Categoria.TIPO_DATO_DOBLE);
+                            darSiguienteCaracter();
+                        } else {
+                            reportarError(lexema, fila, columna, Categoria.TIPO_DATO_DOBLE);
+                        }
+                    } else {
+                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_DOBLE);
+                    }
+                } else {
+                    reportarError(lexema, fila, columna, Categoria.TIPO_DATO_DOBLE);
+                }
+            } else {
+                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_DOBLE);
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean esTipoCadena() {
+        String lexema = "";
+        int fila = filActual;
+        int columna = colActual;
+        int pos = posInicial;
+
+        if (caracterActual == 'c') {
+            lexema += caracterActual;
+            darSiguienteCaracter();
+            if (caracterActual == 'a') {
+                lexema += caracterActual;
+                darSiguienteCaracter();
+
+                if (caracterActual == 'd') {
+                    lexema += caracterActual;
+                    darSiguienteCaracter();
+
+                    if (caracterActual == 'e') {
+                        System.out.println("" + caracterActual);
+                        darSiguienteCaracter();
+                        if (caracterActual == 'n') {
+                            lexema += caracterActual;
+                            darSiguienteCaracter();
+
+                            if (caracterActual == 'a') {
+                                lexema += caracterActual;
+                                almacenarSimbolo(lexema, fila, columna, Categoria.TIPO_DATO_CADENA);
+                                darSiguienteCaracter();
+
+                            } else {
+                                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CADENA);
+                            }
+                        } else {
+                            reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CADENA);
+                        }
+                    } else {
+                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CADENA);
+                    }
+                } else {
+                    hacerBacktracking(pos);
+                    return false;
+                }
+            } else {
+                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CADENA);
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean esTipoCaracter() {
+        String lexema = "";
+        int fila = filActual;
+        int columna = colActual;
+        int pos = posInicial;
+
+        if (caracterActual == 'c') {
+            lexema += caracterActual;
+            darSiguienteCaracter();
+            if (caracterActual == 'a') {
+                lexema += caracterActual;
+                darSiguienteCaracter();
+
+                if (caracterActual == 'r') {
+                    lexema += caracterActual;
+                    darSiguienteCaracter();
+
+                    if (caracterActual == 'a') {
+                        lexema += caracterActual;
+                        darSiguienteCaracter();
+                        if (caracterActual == 'c') {
+                            lexema += caracterActual;
+                            darSiguienteCaracter();
+
+                            if (caracterActual == 't') {
+                                lexema += caracterActual;
+                                darSiguienteCaracter();
+                                if (caracterActual == 'e') {
+                                    lexema += caracterActual;
+                                    darSiguienteCaracter();
+
+                                    if (caracterActual == 'r') {
+
+                                        lexema += caracterActual;
+                                        System.out.println("ntro: " + lexema);
+                                        almacenarSimbolo(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                        darSiguienteCaracter();
+
+                                    } else {
+                                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                    }
+                                } else {
+                                    reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                }
+                            } else {
+                                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                            }
+                        } else {
+                            reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                        }
+                    } else {
+                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                    }
+                } else {
+
+                    hacerBacktracking(pos);
+                    return false;
+                }
+            } else {
+                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+            }
+        } else {
+            return false;
+        }
+        return true;
+
     }
 
     /*

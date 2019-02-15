@@ -6,12 +6,13 @@
 package AnalizadorSintactico;
 
 import AnalizadorLexico.Token;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
  * @author Vicky
  */
-class ExpresionCadena {
+class ExpresionCadena extends Expresion{
     private Token cadena;
     private  Termino termino;
 
@@ -22,6 +23,11 @@ class ExpresionCadena {
     public ExpresionCadena(Token cadena, Termino termino) {
         this.cadena = cadena;
         this.termino = termino;
+    }
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

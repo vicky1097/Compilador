@@ -5,15 +5,22 @@
  */
 package AnalizadorSintactico;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author Vicky
  */
-class ImprimirDato {
+class ImprimirDato extends Sentencia{
     private Termino termino;
 
     public ImprimirDato(Termino termino) {
         this.termino = termino;
+    }
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

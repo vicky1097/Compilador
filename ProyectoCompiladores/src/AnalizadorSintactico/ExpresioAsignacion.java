@@ -5,17 +5,24 @@
  */
 package AnalizadorSintactico;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author Vicky
  */
-class ExpresioAsignacion {
+class ExpresioAsignacion extends Expresion{
     private Variable variable;
     private Termino termino;
 
     public ExpresioAsignacion(Variable variable, Termino termino) {
         this.variable = variable;
         this.termino = termino;
+    }
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

@@ -6,12 +6,13 @@
 package AnalizadorSintactico;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
  * @author Vicky
  */
-class CicloMientras {
+class CicloMientras extends Sentencia{
 
     private ExpresionRelacional sentenciaRelacional;
     private ArrayList<Sentencia> listaSentencias;
@@ -19,6 +20,11 @@ class CicloMientras {
     public CicloMientras(ExpresionRelacional sentenciaRelacional, ArrayList<Sentencia> listaSentencias) {
         this.sentenciaRelacional = sentenciaRelacional;
         this.listaSentencias = listaSentencias;
+    }
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

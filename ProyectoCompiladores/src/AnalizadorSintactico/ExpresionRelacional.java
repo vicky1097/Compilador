@@ -6,12 +6,13 @@
 package AnalizadorSintactico;
 
 import AnalizadorLexico.Token;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
  * @author Vicky
  */
-class ExpresionRelacional {
+class ExpresionRelacional extends Expresion{
 
     private Termino termino1;
     private Termino termino2;
@@ -22,6 +23,11 @@ class ExpresionRelacional {
         this.termino1 = termino1;
         this.termino2 = termino2;
         this.operadorRelacional = operadorRelacional;
+    }
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
