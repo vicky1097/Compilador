@@ -17,10 +17,14 @@ public class UnidadDeCompilacion {
     }
 
     public DefaultMutableTreeNode getArbolVisual() {
-        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("Unidad de compilaciÃ³n");
+        System.out.println("Arbol visual Unidad de compilacion");
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("Unidad de compilacion");
 
-        for (Funcion funcion : listaFunciones) {
-            nodo.add(funcion.getArbolVisual());
+      
+        for (int i = 0; i < listaFunciones.size(); i++) {
+            System.out.println("holi");
+            nodo.add(listaFunciones.get(i).getArbolVisual());
+            
         }
 
         return nodo;

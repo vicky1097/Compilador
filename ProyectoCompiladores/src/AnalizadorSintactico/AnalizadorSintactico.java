@@ -62,6 +62,7 @@ public class AnalizadorSintactico {
      * @return
      */
     public ExpresionAritmetica esExpresionAritmetica() {
+        int pos=posicionActual;
 
         Termino termino = esTermino();
 
@@ -81,7 +82,15 @@ public class AnalizadorSintactico {
                 }
 
             } else {
-                return new ExpresionAritmetica(termino);
+                if(tokenActual.getLexema().equals(":")){
+                    System.out.println("bt");
+                    hacerBacktracking(pos);
+                    return null;
+                }
+                else{
+                    return new ExpresionAritmetica(termino);
+                }
+                
             }
 
         }
@@ -257,7 +266,7 @@ public class AnalizadorSintactico {
         Variable variable = esVariable();
         if (variable != null) {
             obtenerSiguienteToken();
-            if (tokenActual.getLexema().equals(":")) {
+            if (tokenActual.getCategoria()==Categoria.OPERADOR_ASIGNACION) {
                 obtenerSiguienteToken();
                 Termino termino = esTermino();
                 if (termino != null) {
@@ -304,19 +313,23 @@ public class AnalizadorSintactico {
                 Token tipoRetorno = esTipoRetorno();
                 if (tipoRetorno != null) {
                     obtenerSiguienteToken();
+                   
 
                     if (tokenActual.getCategoria() == Categoria.PARENTESIS_ABRIR) {
+                        System.out.println("abrir");
                         obtenerSiguienteToken();
                         ArrayList<Parametro> listaParametro = esListaParametro();
-
-                        if (listaParametro != null) {
+                           
+                        if (listaParametro.size()>0) {
+                            System.out.println("para");
                             obtenerSiguienteToken();
                             if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
                                 obtenerSiguienteToken();
                                 ArrayList<Sentencia> listaSentencias = esListaSentencia();
-                                if (listaSentencias != null) {
+                                if (listaSentencias.size() >0) {
                                     if (tokenActual.getLexema().equals("n")) {
                                         if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
+                                            System.out.println("EsFuncion");
                                             return new Funcion(identificador, tipoRetorno, listaParametro, listaSentencias);
                                         } else {
                                             reportarError("Falta fin de sentencia");
@@ -326,6 +339,23 @@ public class AnalizadorSintactico {
 
                             }
 
+                        } else  if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
+                            System.out.println("cerrar");
+                                obtenerSiguienteToken();
+                                ArrayList<Sentencia> listaSentencias = esListaSentencia();
+                               
+                                if (listaSentencias.size() >0) {
+                                    if (tokenActual.getLexema().equals("n")) {
+                                        if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
+                                            System.out.println("EsFuncion");
+                                            return new Funcion(identificador, tipoRetorno,  listaSentencias);
+                                        } else {
+                                            reportarError("Falta fin de sentencia");
+                                        }
+                                    }
+                                }
+
+                            
                         }
 
                     }
@@ -435,34 +465,38 @@ public class AnalizadorSintactico {
         Sentencia sentencia = null;
         sentencia = esSentanciaDecision();
         if (sentencia != null) {
+            System.out.println("1");
             return sentencia;
         }
         sentencia = esDeclaracionCampo();
         if (sentencia != null) {
+            System.out.println("2");
             return sentencia;
         }
         sentencia = esExpresion();
         if (sentencia != null) {
+            System.out.println("3");
             return sentencia;
         }
-        sentencia = esExpresion();
-        if (sentencia != null) {
-            return sentencia;
-        }
+        
         sentencia = esImprimirDato();
         if (sentencia != null) {
+            System.out.println("5");
             return sentencia;
         }
         sentencia = esCicloMientras();
         if (sentencia != null) {
+            System.out.println("6");
             return sentencia;
         }
         sentencia = esRetorno();
         if (sentencia != null) {
+            System.out.println("7");
             return sentencia;
         }
         sentencia = esLeerDato();
         if (sentencia != null) {
+            System.out.println("8");
             return sentencia;
         }
         return null;
@@ -689,22 +723,33 @@ public class AnalizadorSintactico {
         
         
         Expresion expresion=null;
+        
+         expresion=esExpresionAsignacion();
+        if (expresion != null) {
+            System.out.println("asignacion");
+            return expresion;
+        } 
         expresion=esExpresionAritmetica();
         if (expresion != null) {
+            System.out.println("1bb");
             return expresion;
         } 
         expresion=esExpresionCadena();
         if (expresion != null) {
+            System.out.println("2");
             return expresion;
         } 
         expresion=esExpresionRelacional();
         if (expresion != null) {
+            System.out.println("3");
             return expresion;
         } 
         expresion=esExpresionAsignacion();
         if (expresion != null) {
+            System.out.println("asignacion");
             return expresion;
         } 
+       
         
         
         
