@@ -5,24 +5,20 @@ import AnalizadorLexico.Token;
 public class Variable {
 
     private Token identificador;
-    private ExpresionAritmetica expresion;
-    
+    private Termino termino;
 
     public Variable(Token identificador) {
         super();
         this.identificador = identificador;
     }
 
-    public Variable(Token identificador, ExpresionAritmetica expresion) {
+    public Variable(Token identificador, Termino termino) {
         super();
         this.identificador = identificador;
-        this.expresion = expresion;
+        this.termino = termino;
     }
 
-    @Override
-    public String toString() {
-        return "Variable [identificador=" + identificador + ": expresion=" + expresion + "]";
-    }
+    
 
     public Token getIdentificador() {
         return identificador;
@@ -32,14 +28,5 @@ public class Variable {
         this.identificador = identificador;
     }
 
-    public ExpresionAritmetica getExpresion() {
-        return expresion;
-    }
-
-    public void setExpresion(ExpresionAritmetica expresion) {
-        this.expresion = expresion;
-    }
-    
-    
-
+   
 }

@@ -242,22 +242,9 @@ public class AnalizadorSintactico {
 
         if (tokenActual.getCategoria() == Categoria.IDENTIFICADOR) {
             Token identificador = tokenActual;
-            obtenerSiguienteToken();
 
-            if (tokenActual.getLexema().equals(":")) {
-                obtenerSiguienteToken();
+            return new Variable(identificador);
 
-                ExpresionAritmetica e = esExpresionAritmetica();
-
-                if (e != null) {
-                    return new Variable(identificador, e);
-                } else {
-                    reportarError("Falta expresion");
-                }
-
-            } else {
-                return new Variable(identificador);
-            }
         }
 
         return null;
@@ -269,15 +256,20 @@ public class AnalizadorSintactico {
      * @return
      */
     public ExpresioAsignacion esExpresionAsignacion() {
+
         Variable variable = esVariable();
         if (variable != null) {
             obtenerSiguienteToken();
+
             if (tokenActual.getCategoria() == Categoria.OPERADOR_ASIGNACION) {
                 obtenerSiguienteToken();
                 Termino termino = esTermino();
+
                 if (termino != null) {
                     obtenerSiguienteToken();
+
                     if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
+
                         return new ExpresioAsignacion(variable, termino);
                     }
                 }
@@ -332,9 +324,12 @@ public class AnalizadorSintactico {
                                 obtenerSiguienteToken();
                                 ArrayList<Sentencia> listaSentencias = esListaSentencia();
                                 if (listaSentencias.size() > 0) {
+                                    obtenerSiguienteToken();
                                     if (tokenActual.getLexema().equals("n")) {
+                                        obtenerSiguienteToken();
                                         if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                                             System.out.println("EsFuncion");
+                                            obtenerSiguienteToken();
                                             return new Funcion(identificador, tipoRetorno, listaParametro, listaSentencias);
                                         } else {
                                             reportarError("Falta fin de sentencia");
@@ -350,9 +345,14 @@ public class AnalizadorSintactico {
                             ArrayList<Sentencia> listaSentencias = esListaSentencia();
 
                             if (listaSentencias.size() > 0) {
+                                System.out.println("Estoy aqui");
+                                obtenerSiguienteToken();
                                 if (tokenActual.getLexema().equals("n")) {
+                                    System.out.println("Vea " + tokenActual.getLexema());
+                                    obtenerSiguienteToken();
                                     if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                                         System.out.println("EsFuncion");
+                                        obtenerSiguienteToken();
                                         return new Funcion(identificador, tipoRetorno, listaSentencias);
                                     } else {
                                         reportarError("Falta fin de sentencia");
@@ -507,6 +507,7 @@ public class AnalizadorSintactico {
     }
 
     public ExpresionRelacional esExpresionRelacional() {
+        int pos = posicionActual;
         Termino termino = esTermino();
         if (termino != null) {
             obtenerSiguienteToken();
@@ -522,7 +523,13 @@ public class AnalizadorSintactico {
                     reportarError("Falta un termino para completar la expresión relacional");
                 }
             } else {
-                reportarError("Falta un operador relacional en la expresión");
+                if (tokenActual.getCategoria() == Categoria.OPERADOR_ASIGNACION) {
+                    hacerBacktracking(pos);
+                    return null;
+                } else {
+                    reportarError("Falta un operador relacional en la expresión");
+
+                }
 
             }
 
@@ -722,7 +729,7 @@ public class AnalizadorSintactico {
         return lista;
     }
 
-    private Expresion esExpresion() {
+    public Expresion esExpresion() {
 
         Expresion expresion = null;
 
