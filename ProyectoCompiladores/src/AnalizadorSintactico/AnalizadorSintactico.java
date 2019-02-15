@@ -23,7 +23,7 @@ public class AnalizadorSintactico {
     }
 
     /**
-     * <UnidadCompilación> ::= <ListaDeclaracion>
+     * <UnidadCompilación> ::= <ListaFunciones>
      *
      * @return
      */
@@ -135,7 +135,8 @@ public class AnalizadorSintactico {
     }
 
     /**
-     * <Termino> ::= entero | real | identificador
+     * <Termino> ::= entero | real | identificador | invocacionMetodo| cadena |
+     * booleano | caracter
      *
      * @return
      */
@@ -155,7 +156,7 @@ public class AnalizadorSintactico {
     }
 
     /**
-     * <DeclaracionCampo> ::= [<visibilidad>] <tipoDato> <ListaVariables> ";"
+     * <DeclaracionCampo> ::= <tipoDato> <ListaVariables> ";"
      *
      * @return
      */
@@ -207,6 +208,12 @@ public class AnalizadorSintactico {
         return lista;
     }
 
+    /**
+     *
+     *
+     *
+     * @return
+     */
     public ArrayList<Parametro> esListaParametro() {
 
         ArrayList<Parametro> lista = new ArrayList<>();
