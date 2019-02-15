@@ -6,19 +6,20 @@
 package AnalizadorSintactico;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
  * @author Vicky
  */
-public class SentanciaDecision {
-    
+public class SentanciaDecision extends Sentencia{
+
     private ExpresionRelacional sentenciaRelacional;
     private ArrayList<Sentencia> listaSentencia;
-    private ArrayList<Sentencia>listaSentencia1;
-    
+    private ArrayList<Sentencia> listaSentencia1;
 
     public SentanciaDecision(ExpresionRelacional sentenciaRelacional, ArrayList<Sentencia> listaSentencia) {
+
         this.sentenciaRelacional = sentenciaRelacional;
         this.listaSentencia = listaSentencia;
     }
@@ -28,8 +29,10 @@ public class SentanciaDecision {
         this.listaSentencia = listaSentencia;
         this.listaSentencia1 = listaSentencia1;
     }
-    
-    
-    
-    
+
+    //@Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

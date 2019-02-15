@@ -5,17 +5,24 @@
  */
 package AnalizadorSintactico;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author Vicky
  */
-class Retorno {
+public class Retorno extends Sentencia {
+
     private Termino termino;
 
     public Retorno(Termino termino) {
         this.termino = termino;
+        
     }
-    
-    
-    
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

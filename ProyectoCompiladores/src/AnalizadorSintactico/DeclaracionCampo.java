@@ -2,8 +2,9 @@ package AnalizadorSintactico;
 
 import AnalizadorLexico.Token;
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-public class DeclaracionCampo {
+public class DeclaracionCampo extends Sentencia {
 
     
     private Token tipoDato;
@@ -30,6 +31,11 @@ public class DeclaracionCampo {
     public String toString() {
         return "DeclaracionCampo [TipoDato=" + tipoDato + ", listaIdentificadores="
                 + listaIdentificadores + "]";
+    }
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

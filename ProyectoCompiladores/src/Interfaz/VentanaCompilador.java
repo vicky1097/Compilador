@@ -9,6 +9,7 @@ import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorSintactico.AnalizadorSintactico;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -55,6 +56,8 @@ public class VentanaCompilador extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtCodigoFuente = new javax.swing.JTextArea();
         btnLimpiar = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTree_ArbolVisual = new javax.swing.JTree();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -164,6 +167,11 @@ public class VentanaCompilador extends javax.swing.JFrame {
         });
         getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 70, -1));
 
+        jTree_ArbolVisual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane4.setViewportView(jTree_ArbolVisual);
+
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 310, 490));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -171,11 +179,18 @@ public class VentanaCompilador extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!txtCodigoFuente.getText().equals("")) {
             analizador = new AnalizadorLexico(txtCodigoFuente.getText());
-            analizadorSin = new AnalizadorSintactico(analizador.getTablaSimbolos());
+            
 
             analizador.Analizar();
             agregarTablaTokens();
             agregarTablaErrores();
+            analizadorSin = new AnalizadorSintactico(analizador.getTablaSimbolos());
+            analizadorSin.analizar();
+            
+            
+            
+            
+            jTree_ArbolVisual.setModel(new DefaultTreeModel(analizadorSin.getUnidadDeCompilacion().getArbolVisual()));
         } else {
             JOptionPane.showMessageDialog(null, "¡Debe ingresar primero código fuente!");
         }
@@ -284,6 +299,8 @@ public class VentanaCompilador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTree jTree_ArbolVisual;
     private javax.swing.JTable tablaErrores;
     private javax.swing.JTable tablaTokens;
     private javax.swing.JTextArea txtCodigoFuente;

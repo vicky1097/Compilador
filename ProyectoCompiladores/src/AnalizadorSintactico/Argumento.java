@@ -5,17 +5,27 @@
  */
 package AnalizadorSintactico;
 
+import AnalizadorLexico.Token;
+import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author Vicky
  */
 public class Argumento {
-    
+
+    private Token identificador;
     private Termino termino;
 
-    public Argumento(Termino termino) {
+    public Argumento(Token identificador, Termino termino) {
+        this.identificador = identificador;
         this.termino = termino;
     }
     
+    public DefaultMutableTreeNode getArbolVisual(){
+        return null;
+        
+    }
     
+
 }

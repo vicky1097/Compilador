@@ -6,12 +6,15 @@
 package AnalizadorSintactico;
 
 import AnalizadorLexico.Token;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 
 /**
  *
  * @author andre
  */
 class Parametro {
+
     private Token tipoDato;
     private Token identificador;
 
@@ -19,8 +22,8 @@ class Parametro {
         this.tipoDato = tipoDato;
         this.identificador = identificador;
     }
-    
-    
-    
-    
+
+    public DefaultMutableTreeNode getArbolVisual() {
+        return new DefaultMutableTreeNode(identificador.getLexema() + " : " + tipoDato.getLexema());
+    }
 }

@@ -5,15 +5,23 @@
  */
 package AnalizadorSintactico;
 
+import AnalizadorLexico.Token;
+import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author Vicky
  */
-class LeerDato {
-    private Termino termino;
+class LeerDato extends Sentencia{
+    private Token termino;
 
-    public LeerDato(Termino termino) {
+    public LeerDato(Token termino) {
         this.termino = termino;
+    }
+
+    @Override
+    public DefaultMutableTreeNode getArbolVisual() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
