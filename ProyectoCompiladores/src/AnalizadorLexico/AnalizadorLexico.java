@@ -30,11 +30,9 @@ public class AnalizadorLexico {
             }
 
             if (esComentarioLinea()) {
-                System.out.println("1");
                 continue;
             }
             if (esComentarioBloque()) {
-                System.out.println("2");
                 continue;
             }
 //            if (esPalabraReservada()) {
@@ -43,97 +41,74 @@ public class AnalizadorLexico {
 //            }
 
             if (esIdentificador()) {
-                System.out.println("4");
                 continue;
             }
             if (esTipoCadena()) {
-                System.out.println("cadena");
                 continue;
             }
             if (esTipoCaracter()) {
-                System.out.println("caracter");
                 continue;
             }
             if (esTipoEntero()) {
-                System.out.println("entero");
                 continue;
             }
             if (esTipoDoble()) {
-                System.out.println("doble");
                 continue;
             }
             if (esCadena()) {
-                System.out.println("5");
                 continue;
             }
             if (esBoolean()) {
-                System.out.println("6");
                 continue;
             }
             if (esOperadorAritmetico()) {
-                System.out.println("7");
                 continue;
             }
             if (esOperadorAsignacion()) {
-                System.out.println("8");
                 continue;
             }
             if (esOperadorRelacional()) {
-                System.out.println("9");
                 continue;
             }
             if (esEntero()) {
-                System.out.println("10");
                 continue;
             }
             if (esCaracter()) {
-                System.out.println("11");
                 continue;
             }
             if (esReal()) {
-                System.out.println("12");
                 continue;
             }
             if (esCorchete()) {
-                System.out.println("13");
                 continue;
             }
             if (esLlaves()) {
-                System.out.println("14");
                 continue;
             }
             if (esParentesis()) {
-                System.out.println("15");
                 continue;
             }
             if (esFinSentencia()) {
-                System.out.println("16");
                 continue;
             }
 
             if (esOperadorLogico()) {
-                System.out.println("17");
                 continue;
             }
             if (esOperadorIncremento()) {
-                System.out.println("18");
                 continue;
             }
             if (esOperadorDecremento()) {
-                System.out.println("19");
                 continue;
             }
 
             if (esPunto()) {
-                System.out.println("20");
                 continue;
             }
             if (esSeparador()) {
-                System.out.println("21");
                 continue;
             }
             if (esArreglo()) {
-                System.out.println("22");
                 continue;
             }
 
@@ -1399,6 +1374,7 @@ public class AnalizadorLexico {
                     darSiguienteCaracter();
 
                     if (caracterActual == 'e') {
+                        lexema += caracterActual;
                         System.out.println("" + caracterActual);
                         darSiguienteCaracter();
                         if (caracterActual == 'n') {

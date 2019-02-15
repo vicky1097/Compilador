@@ -155,6 +155,7 @@ public class VentanaCompilador extends javax.swing.JFrame {
 
         txtCodigoFuente.setColumns(20);
         txtCodigoFuente.setRows(5);
+        txtCodigoFuente.setText("F :sumar: entero ()\n:cadena: : 4 \nn!");
         jScrollPane3.setViewportView(txtCodigoFuente);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 66, 610, 90));

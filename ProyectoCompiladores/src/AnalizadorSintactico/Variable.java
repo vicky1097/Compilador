@@ -24,4 +24,22 @@ public class Variable {
         return "Variable [identificador=" + identificador + ": expresion=" + expresion + "]";
     }
 
+    public Token getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(Token identificador) {
+        this.identificador = identificador;
+    }
+
+    public ExpresionAritmetica getExpresion() {
+        return expresion;
+    }
+
+    public void setExpresion(ExpresionAritmetica expresion) {
+        this.expresion = expresion;
+    }
+    
+    
+
 }

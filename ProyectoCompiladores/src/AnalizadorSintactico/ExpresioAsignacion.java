@@ -22,7 +22,8 @@ class ExpresioAsignacion extends Expresion{
 
     @Override
     public DefaultMutableTreeNode getArbolVisual() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("holii");
+        return new  DefaultMutableTreeNode(variable.getIdentificador()+": "+termino.toString());
     }
     
     

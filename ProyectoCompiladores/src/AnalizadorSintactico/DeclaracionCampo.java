@@ -35,7 +35,19 @@ public class DeclaracionCampo extends Sentencia {
 
     @Override
     public DefaultMutableTreeNode getArbolVisual() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String cadena = "";
+		
+		for (int i = 0; i < listaIdentificadores.size(); i++) {
+			if(i == listaIdentificadores.size()-1) {
+				cadena+=listaIdentificadores.get(i).getIdentificador().getLexema();
+			}else {
+				cadena+=listaIdentificadores.get(i).getIdentificador().getLexema()+", ";
+			}
+		}
+		
+		cadena+=" : "+tipoDato.getLexema();
+		
+		return new DefaultMutableTreeNode(cadena);
     }
 
 }

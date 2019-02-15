@@ -37,7 +37,7 @@ public class Termino {
 
     @Override
     public String toString() {
-        return "Termino [termino=" + termino + "]";
+        return termino.getLexema();
     }
 
 }
