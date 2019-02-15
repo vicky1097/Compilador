@@ -22,8 +22,8 @@ class ExpresioAsignacion extends Expresion{
 
     @Override
     public DefaultMutableTreeNode getArbolVisual() {
-        System.out.println("holii");
-        return new  DefaultMutableTreeNode(variable.getIdentificador()+": "+termino.toString());
+        
+        return new  DefaultMutableTreeNode(variable.getIdentificador().getLexema()+": "+termino.toString());
     }
     
     
