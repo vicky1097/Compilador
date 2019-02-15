@@ -31,10 +31,9 @@ public class Funcion {
     public Funcion(Token identificador, Token tipoRetorno, ArrayList<Sentencia> listaSentencias) {
         this.identificador = identificador;
         this.tipoRetorno = tipoRetorno;
+
         this.listaSentencias = listaSentencias;
     }
-    
-    
 
     public Token getIdentificador() {
         return identificador;
@@ -69,15 +68,18 @@ public class Funcion {
     }
 
     public DefaultMutableTreeNode getArbolVisual() {
-      System.out.println("Arbol visual Funcion");
+        System.out.println("Arbol visual Funcion");
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("Funcion");
         nodo.add(new DefaultMutableTreeNode(identificador.getLexema() + " : " + tipoRetorno.getLexema()));
 
-        DefaultMutableTreeNode params = new DefaultMutableTreeNode("Parametros");
-        nodo.add(params);
+        if (NullPointerException.class.equals(listaParametros)) {
+            DefaultMutableTreeNode params = new DefaultMutableTreeNode("Parametros");
+            nodo.add(params);
 
-        for (Parametro parametro : listaParametros) {
-            params.add(parametro.getArbolVisual());
+            for (Parametro parametro : listaParametros) {
+                params.add(parametro.getArbolVisual());
+            }
+
         }
 
         DefaultMutableTreeNode sentencias = new DefaultMutableTreeNode("Sentencias");
@@ -86,7 +88,6 @@ public class Funcion {
         for (Sentencia sentencia : listaSentencias) {
             sentencias.add(sentencia.getArbolVisual());
         }
-        
 
         return nodo;
     }
