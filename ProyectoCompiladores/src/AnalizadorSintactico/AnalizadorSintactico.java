@@ -34,6 +34,9 @@ public class AnalizadorSintactico {
         if (ea != null) {
             return new UnidadDeCompilacion(ea);
         }
+        else {
+            reportarError("Falta al menos una función");
+        }
 
         return null;
     }
@@ -43,15 +46,24 @@ public class AnalizadorSintactico {
      *
      * @return
      */
-    public ArrayList<DeclaracionCampo> esListaDeclaraciones() {
-        ArrayList<DeclaracionCampo> lista = new ArrayList<>();
+    public ArrayList<DeclaracionVariable> esListaDeclaraciones() {
+        ArrayList<DeclaracionVariable> lista = new ArrayList<>();
 
-        DeclaracionCampo declaracionCampo = esDeclaracionCampo();
+        DeclaracionVariable declaracionCampo = esDeclaracionVariable();
 
-        while (declaracionCampo != null) {
-            lista.add(declaracionCampo);
-            declaracionCampo = esDeclaracionCampo();
+        if(declaracionCampo != null)
+        {
+            while (declaracionCampo != null) {
+             lista.add(declaracionCampo);
+             declaracionCampo = esDeclaracionVariable();
+            }
         }
+        
+        
+        else {
+          reportarError("Debe haber al menos una declaracion");
+        }
+        
 
         return lista;
     }
@@ -156,11 +168,11 @@ public class AnalizadorSintactico {
     }
 
     /**
-     * <DeclaracionCampo> ::= <tipoDato> <ListaVariables> ";"
+     * <DeclaracionVariable> ::= <tipoDato> <ListaVariables> ";"
      *
      * @return
      */
-    public DeclaracionCampo esDeclaracionCampo() {
+    public DeclaracionVariable esDeclaracionVariable() {
 
         Token tipoDato = esTipoDato();
 
@@ -172,7 +184,7 @@ public class AnalizadorSintactico {
 
                 if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                     obtenerSiguienteToken();
-                    return new DeclaracionCampo(tipoDato, listaIdent);
+                    return new DeclaracionVariable(tipoDato, listaIdent);
                 } else {
                     reportarError("Falta fin de sentencia");
                 }
@@ -187,56 +199,56 @@ public class AnalizadorSintactico {
     /**
      * <ListaVariables> :== <variable> [","<ListaVariables>]
      *
-     * @return
+     * @return listaVariables
      */
     public ArrayList<Variable> esListaVariables() {
 
-        ArrayList<Variable> lista = new ArrayList<>();
+        ArrayList<Variable> listaVariables = new ArrayList<>();
         Variable variable = esVariable();
 
         if (variable != null) {
 
-            lista.add(variable);
+            listaVariables.add(variable);
 
             if (tokenActual.getCategoria() == Categoria.SEPARADOR) {
                 obtenerSiguienteToken();
-                lista.addAll(esListaVariables());
+                listaVariables.addAll(esListaVariables());
             }
 
         }
 
-        return lista;
+        return listaVariables;
     }
 
     /**
      *
+     * < listaParametros>::= <Parametro> | ["," <listaParametros>]
      *
-     *
-     * @return
+     * @return listaParametros
      */
     public ArrayList<Parametro> esListaParametro() {
 
-        ArrayList<Parametro> lista = new ArrayList<>();
+        ArrayList<Parametro> listaParametros = new ArrayList<>();
         Parametro parametro = esParametro();
 
         if (parametro != null) {
 
-            lista.add(parametro);
+            listaParametros.add(parametro);
 
             if (tokenActual.getCategoria() == Categoria.SEPARADOR) {
                 obtenerSiguienteToken();
-                lista.addAll(esListaParametro());
+                listaParametros.addAll(esListaParametro());
             }
 
         }
 
-        return lista;
+        return listaParametros;
     }
 
     /**
-     * <variable> ::= identificador["="<Expresion>]
+     * <variable> ::= identificador[":"<Termino>]
      *
-     * @return
+     * @return Variable(identificador)
      */
     public Variable esVariable() {
 
@@ -251,9 +263,9 @@ public class AnalizadorSintactico {
     }
 
     /**
-     * <Asignacion> ::= identificador operadorAsignacion <Expresion>
+     * <Asignacion> ::= identificador operadorAsignacion <Termino> "!"
      *
-     * @return
+     * @return ExpresioAsignacion(variable, termino)
      */
     public ExpresioAsignacion esExpresionAsignacion() {
 
@@ -273,17 +285,21 @@ public class AnalizadorSintactico {
                         obtenerSiguienteToken();
                         System.out.println("" + tokenActual.getLexema());
                         return new ExpresioAsignacion(variable, termino);
+                    }else {
+                        reportarError("Falta fin de sentencia");
                     }
                 }
+            }else{
+                reportarError("Falta operador de asignacion");
             }
         }
         return null;
     }
 
     /**
-     * <tipoDato> ::= int | double | identificador | char
+     * <tipoDato> ::= entero | doble | cadena | caracter | buleano
      *
-     * @return
+     * @return tokenActual
      */
     public Token esTipoDato() {
         if (tokenActual.getCategoria() == Categoria.TIPO_DATO_ENTERO || tokenActual.getCategoria() == Categoria.TIPO_DATO_DOBLE
@@ -294,6 +310,11 @@ public class AnalizadorSintactico {
         return null;
     }
 
+    /**
+     * <tipoRetorno>::= <tipoDato> | vacio
+     *
+     * @return tokenActual
+     */
     public Token esTipoRetorno() {
         if (tokenActual.getLexema().equals(esTipoDato().getLexema()) || tokenActual.getLexema().equals("")) {
             return tokenActual;
@@ -303,6 +324,13 @@ public class AnalizadorSintactico {
         return null;
     }
 
+    /**
+     * <Funcion>::= "F" identificador <tipoRetorno> "(" <listaParametros> ")"
+     * <listaSentencias> "n" finalizador
+     *
+     *
+     * @return Funcion
+     */
     public Funcion esFuncion() {
 
         if (tokenActual.getLexema().equals("f")) {
@@ -339,9 +367,15 @@ public class AnalizadorSintactico {
                                         } else {
                                             reportarError("Falta fin de sentencia");
                                         }
+                                    }else{
+                                        reportarError("Falta lexema n");
                                     }
+                                }else{
+                                    reportarError("Debe haber al menos una sentencia");
                                 }
 
+                            }else{
+                                reportarError("Falta parentesis izquierdo");
                             }
 
                         } else if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
@@ -362,20 +396,35 @@ public class AnalizadorSintactico {
                                     } else {
                                         reportarError("Falta fin de sentencia");
                                     }
+                                }else{
+                                    reportarError("Falta lexema n");
                                 }
+                            }else{
+                                reportarError("Debe haber al menos una sentencia");
                             }
 
+                        }else{
+                            reportarError("Falta parentesis izquierdo");
                         }
 
+                    }else{
+                        reportarError("Falta parentesis derecho");
                     }
 
+                }else{
+                    reportarError("Falta definir el tipo de retorno");
                 }
+            } else{
+                reportarError("Falta identificador de funcion");
             }
 
         }
         return null;
     }
 
+    /**
+     * Metodo que se encarga de saltar a la siguiente posición
+     */
     public void obtenerSiguienteToken() {
 
         if (posicionActual < tablaSimbolos.size() - 1) {
@@ -387,10 +436,23 @@ public class AnalizadorSintactico {
 
     }
 
+    /**
+     *
+     * Metodo que se encarga de reportar si encuentra algun error al momento de
+     * analizar el lexema que hemos ingresado
+     *
+     * @param mensaje
+     */
     public void reportarError(String mensaje) {
         tablaErrores.add(new ErrorSintactico(mensaje, tokenActual.getFila(), tokenActual.getColumna()));
     }
 
+    /**
+     * Metodo que se encarga de realizar backtracking en el codigo para buscar
+     * otra ruta por la cual pueda analizar el lexema proporcionado
+     *
+     * @param posInicial
+     */
     public void hacerBacktracking(int posInicial) {
         posicionActual = posInicial;
         tokenActual = tablaSimbolos.get(posicionActual);
@@ -404,6 +466,12 @@ public class AnalizadorSintactico {
         return unidadDeCompilacion;
     }
 
+    /**
+     * <Invocacion>::= "IvF" punto identificador "(" [<listaParametros>] ")"
+     * finSentencia
+     *
+     * @return Invocacion
+     */
     public Invocacion esInvocacion() {
         if (tokenActual.getLexema().equals("IvF")) {
             obtenerSiguienteToken();
@@ -423,6 +491,12 @@ public class AnalizadorSintactico {
                                 if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                                     return new Invocacion(listaArgumentos);
                                 }
+                                else{
+                                    reportarError("Falta fin de sentecia");
+                                }
+                            }
+                            else{
+                                reportarError("Falta parentesis izquierdo");
                             }
                         } else {
                             if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
@@ -430,16 +504,36 @@ public class AnalizadorSintactico {
                                 if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                                     return new Invocacion();
                                 }
+                                else{
+                                    reportarError("Falta fin de sentecia");
+                                }
                             }
+                            else{
+                                reportarError("Falta parentesis izquierdo");
+                            }
+                            
                         }
+                    }else{
+                        reportarError("Falta parentesis derecho");
                     }
+                }else {
+                    reportarError("Falta identificador función");
                 }
+            }else {
+                reportarError("Falta Punto");
             }
+            
 
         }
         return null;
     }
 
+    /**
+     *
+     * <Parametro>::= <tipoDato> identificador
+     *
+     * @return Parametro
+     */
     public Parametro esParametro() {
         Token tipo = esTipoDato();
         if (tipo != null) {
@@ -447,28 +541,48 @@ public class AnalizadorSintactico {
             if (tokenActual.getCategoria() == Categoria.IDENTIFICADOR) {
                 return new Parametro(tipo, tokenActual);
             }
+            else{
+                reportarError("Falata identificador del parametro");
+            }
         }
+        
         return null;
     }
 
+    /**
+     * <ListaSentencias> ::= <Sentencia> | [<ListaSentencias>]
+     *
+     * @return listaSentencias
+     */
     public ArrayList<Sentencia> esListaSentencia() {
-        ArrayList<Sentencia> lista = new ArrayList<>();
+        ArrayList<Sentencia> listaSentencias = new ArrayList<>();
         Sentencia sentencia = esSentencia();
 
         if (sentencia != null) {
 
-            lista.add(sentencia);
+            listaSentencias.add(sentencia);
 
             if (tokenActual.getCategoria() == Categoria.SEPARADOR) {
                 obtenerSiguienteToken();
-                lista.addAll(esListaSentencia());
+                listaSentencias.addAll(esListaSentencia());
             }
 
         }
+        else{
+            reportarError("Debe haber al menos una sentencia");
+        }
 
-        return lista;
+        return listaSentencias;
     }
 
+    /**
+     *
+     * <Sentencia> ::= <SentenciaDesicion> | <DeclaracionVariable> |
+     * <ExpresionAsignacion> | <ImprimirDato> |<CicloMientras> |<Retorno> |
+     * <LeerDato> |<Expresion>
+     *
+     * @return
+     */
     public Sentencia esSentencia() {
 
         Sentencia sentencia = null;
@@ -477,7 +591,7 @@ public class AnalizadorSintactico {
             System.out.println("1");
             return sentencia;
         }
-        sentencia = esDeclaracionCampo();
+        sentencia = esDeclaracionVariable();
         if (sentencia != null) {
             System.out.println("2");
             return sentencia;
@@ -511,6 +625,11 @@ public class AnalizadorSintactico {
         return null;
     }
 
+    /**
+     * <ExpresionRelacional> ::= <Termino> OperadorRelacional <Termino>
+     *
+     * @return ExpresionRelacional
+     */
     public ExpresionRelacional esExpresionRelacional() {
         int pos = posicionActual;
         Termino termino = esTermino();
@@ -547,6 +666,12 @@ public class AnalizadorSintactico {
         return null;
     }
 
+    /**
+     * <SentanciaDecision> ::= "Si" <ExpresionRelacional> "hacer"
+     * <listaSentencias> "FinSi" ["Sino" <listaSentencias> "FinSino"]
+     *
+     * @return SentanciaDecision
+     */
     public SentanciaDecision esSentanciaDecision() {
 
         if (tokenActual.getLexema().equals("Si")) {
@@ -576,15 +701,24 @@ public class AnalizadorSintactico {
                                     if (tokenActual.getLexema().equals("FinSino")) {
                                         return new SentanciaDecision(expresionRelacional, listaSentencias, listaSentencia1);
                                     }
+                                    else{
+                                        reportarError("Falta finalizacion del Sino");
+                                    }
                                 }
                             }
 
+                        }
+                        else{
+                            reportarError("Falta finalizacion del Si");
                         }
 
                     }
 
                 }
+                reportarError("Falta palabra reservada \"hacer\"");
 
+            }else {
+                reportarError("Falta exprecion relacional");
             }
 
         }
@@ -593,6 +727,11 @@ public class AnalizadorSintactico {
 
     }
 
+    /**
+     * <ImprimirDato> ::= "Imprimir" "(" <Termino> ")" finSentencia
+     *
+     * @return ImprimirDato
+     */
     public ImprimirDato esImprimirDato() {
 
         if (tokenActual.getLexema().equals("Imprimir")) {
@@ -609,16 +748,32 @@ public class AnalizadorSintactico {
 
                         if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                             return new ImprimirDato(termino);
+                        } else{
+                            reportarError("Falta fin de sentencia");
                         }
                     }
+                    else{
+                        reportarError("Falta parentesis izquierdo");
+                    }
 
+                } else{
+                    reportarError("Falta termino para imprimir");
                 }
+            }
+            else{
+                reportarError("Falta parentesis derecho");
             }
         }
 
         return null;
     }
 
+    /**
+     * <CicloMientras> ::= "Mientras" <ExpresionRelacional> "hacer"
+     * <ListaSentencias> "FinMientras"
+     *
+     * @return CicloMientras
+     */
     public CicloMientras esCicloMientras() {
 
         if (tokenActual.getCategoria() == Categoria.INICIO_MIENTRAS) {
@@ -639,11 +794,17 @@ public class AnalizadorSintactico {
                             obtenerSiguienteToken();
                             System.out.println("Aca estoyb 2");
                             return new CicloMientras(expresionRelacional, listaSentencias);
+                        }else{
+                            reportarError("Falta finMientras");
                         }
 
                     }
+                }else{
+                    reportarError("Falata palabra reservada \"hacer\"");
                 }
 
+            } else{
+                reportarError("Falta exprecion relacional");
             }
 
         }
@@ -652,6 +813,11 @@ public class AnalizadorSintactico {
 
     }
 
+    /**
+     * <Retorno> ::= "retorno" <Termino> finSentencia
+     *
+     * @return esRetorno
+     */
     public Retorno esRetorno() {
 
         if (tokenActual.getLexema().equals("retorno")) {
@@ -664,6 +830,11 @@ public class AnalizadorSintactico {
                 if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                     return new Retorno(termino);
                 }
+                else{
+                    reportarError("Falta fin de sentencia");
+                }
+            }else{
+                reportarError("Falta termino para retornar");
             }
 
         }
@@ -671,6 +842,11 @@ public class AnalizadorSintactico {
         return null;
     }
 
+    /**
+     * <LeerDato> ::= <Variable> punto "leer"
+     *
+     * @return LeerDato
+     */
     public LeerDato esLeerDato() {
 
         if (tokenActual.getCategoria() == Categoria.IDENTIFICADOR) {
@@ -683,7 +859,11 @@ public class AnalizadorSintactico {
                 if (tokenActual.getLexema().equals("leer")) {
                     return new LeerDato(identificador);
 
+                }else{
+                    reportarError("Falta palabra reservada leer");
                 }
+            }else{
+                reportarError("Falta punto");
             }
 
         }
@@ -691,19 +871,35 @@ public class AnalizadorSintactico {
         return null;
     }
 
+    /**
+     * <ListaFunciones> ::= <Funcion> | [<ListaFunciones>]
+     *
+     * @return listaFunciones
+     */
     public ArrayList<Funcion> esListaFunciones() {
-        ArrayList<Funcion> lista = new ArrayList<>();
+        ArrayList<Funcion> listaFunciones = new ArrayList<>();
 
         Funcion funcion = esFuncion();
-
-        while (funcion != null) {
-            lista.add(funcion);
+        if(funcion != null){
+             while (funcion != null) {
+            listaFunciones.add(funcion);
             funcion = esFuncion();
         }
+        }
+        else{
+            reportarError("Febe haber al menos una funcion");
+        }
 
-        return lista;
+        
+
+        return listaFunciones;
     }
 
+    /**
+     * <Argumento> ::= identificador Op. Asignacion <Termino>
+     *
+     * @return Argumento
+     */
     public Argumento esArgumento() {
         if (tokenActual.getCategoria() == Categoria.IDENTIFICADOR) {
             Token identificador = tokenActual;
@@ -714,63 +910,73 @@ public class AnalizadorSintactico {
                 if (termino != null) {
                     return new Argumento(identificador, termino);
 
+                }else{
+                    reportarError("Falta termino");
                 }
+            }else{
+                reportarError("Falta operador Asignacion");
             }
         }
         return null;
     }
 
+    /**
+     * <ListaArgumentos> ::= <Argumento> | ["," <ListaArgumentos>]
+     *
+     * @return ListaArgumento
+     */
     public ArrayList<Argumento> esListaArgumento() {
-        ArrayList<Argumento> lista = new ArrayList<>();
+        ArrayList<Argumento> listaArgumentos = new ArrayList<>();
         Argumento argumento = esArgumento();
 
         if (argumento != null) {
 
-            lista.add(argumento);
+            listaArgumentos.add(argumento);
 
             if (tokenActual.getCategoria() == Categoria.SEPARADOR) {
                 obtenerSiguienteToken();
-                lista.addAll(esListaArgumento());
+                listaArgumentos.addAll(esListaArgumento());
             }
 
         }
 
-        return lista;
+        return listaArgumentos;
     }
 
+    /**
+     * <Expresion> ::= <ExpresionAritmetica> | <ExpresionAsignacion> |
+     * <ExpresionCadena> | <ExpresionRelacional>
+     *
+     * @return expresion
+     */
     public Expresion esExpresion() {
 
         Expresion expresion = null;
 
         expresion = esExpresionAsignacion();
         if (expresion != null) {
-            System.out.println("asignacion");
             return expresion;
         }
         expresion = esExpresionAritmetica();
         if (expresion != null) {
-            System.out.println("1bb");
             return expresion;
         }
         expresion = esExpresionCadena();
         if (expresion != null) {
-            System.out.println("2");
             return expresion;
         }
         expresion = esExpresionRelacional();
         if (expresion != null) {
-            System.out.println("3");
             return expresion;
         }
-        expresion = esExpresionAsignacion();
-        if (expresion != null) {
-            System.out.println("asignacion");
-            return expresion;
-        }
-
         return null;
     }
 
+    /**
+     * <ExpresionCadena> ::= cadena ["+" <Termino>]
+     *
+     * @return ExpresionCadena
+     */
     public ExpresionCadena esExpresionCadena() {
         if (tokenActual.getCategoria() == Categoria.CADENA_CARACTERES) {
             Token cadena = tokenActual;

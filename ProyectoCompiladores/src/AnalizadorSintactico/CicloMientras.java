@@ -12,20 +12,20 @@ import javax.swing.tree.DefaultMutableTreeNode;
  *
  * @author Vicky
  */
-class CicloMientras extends Sentencia {
+public class CicloMientras extends Sentencia {
 
-    private ExpresionRelacional sentenciaRelacional;
+    private ExpresionRelacional expresionRelacional;
     private ArrayList<Sentencia> listaSentencias;
 
-    public CicloMientras(ExpresionRelacional sentenciaRelacional, ArrayList<Sentencia> listaSentencias) {
-        this.sentenciaRelacional = sentenciaRelacional;
+    public CicloMientras(ExpresionRelacional expresionRelacional, ArrayList<Sentencia> listaSentencias) {
+        this.expresionRelacional = expresionRelacional;
         this.listaSentencias = listaSentencias;
     }
 
     @Override
     public DefaultMutableTreeNode getArbolVisual() {
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("Ciclo Mientras");
-        nodo.add(new DefaultMutableTreeNode("Expresión Relacional: "+sentenciaRelacional.getTermino1().toString()+""+sentenciaRelacional.getOperadorRelacional().getLexema()+""+sentenciaRelacional.getTermino2().toString()));
+        nodo.add(new DefaultMutableTreeNode("Expresión Relacional: " + expresionRelacional.getTermino1().toString() + "" + expresionRelacional.getOperadorRelacional().getLexema() + "" + expresionRelacional.getTermino2().toString()));
 
         DefaultMutableTreeNode sentencia = new DefaultMutableTreeNode("Sentencias");
         nodo.add(sentencia);

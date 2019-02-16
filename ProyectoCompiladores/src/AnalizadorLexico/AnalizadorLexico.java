@@ -36,7 +36,6 @@ public class AnalizadorLexico {
                 continue;
             }
 
-
             if (esIdentificador()) {
                 continue;
             }
@@ -94,10 +93,15 @@ public class AnalizadorLexico {
             if (esCicloMientrasFin()) {
                 continue;
             }
-            if(esPalabraReservadaHacer()){
+            if (esPalabraReservadaHacer()) {
                 continue;
             }
-
+            if (esCicloMientrasInicio()) {
+                continue;
+            }
+            if (esCicloMientrasFin()) {
+                continue;
+            }
             if (esOperadorLogico()) {
                 continue;
             }
@@ -123,6 +127,151 @@ public class AnalizadorLexico {
 
         }
 
+    }
+
+    public boolean esCicloMientrasInicio() {
+        String lexema = "";
+        int fila = filActual;
+        int columna = colActual;
+        int pos = posInicial;
+
+        if (caracterActual == 'M') {
+            lexema += caracterActual;
+            darSiguienteCaracter();
+            if (caracterActual == 'i') {
+                lexema += caracterActual;
+                darSiguienteCaracter();
+                if (caracterActual == 'e') {
+                    lexema += caracterActual;
+                    darSiguienteCaracter();
+                    if (caracterActual == 'n') {
+                        lexema += caracterActual;
+                        darSiguienteCaracter();
+                        if (caracterActual == 't') {
+                            lexema += caracterActual;
+                            darSiguienteCaracter();
+                            if (caracterActual == 'r') {
+                                lexema += caracterActual;
+                                darSiguienteCaracter();
+                                if (caracterActual == 'a') {
+                                    lexema += caracterActual;
+                                    darSiguienteCaracter();
+                                    if (caracterActual == 's') {
+                                        lexema += caracterActual;
+                                        almacenarSimbolo(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                        darSiguienteCaracter();
+                                    } else {
+                                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                    }
+                                } else {
+                                    reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                }
+                            } else {
+                                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                            }
+                        } else {
+                            reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                        }
+                    } else {
+                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                    }
+                } else {
+                    reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                }
+            } else {
+                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+            }
+        } else {
+            return false;
+        }
+        return true;
+
+    }
+
+    public boolean esCicloMientrasFin() {
+        String lexema = "";
+        int fila = filActual;
+        int columna = colActual;
+        int pos = posInicial;
+
+        if (caracterActual == 'F') {
+            lexema += caracterActual;
+            darSiguienteCaracter();
+            if (caracterActual == 'i') {
+                lexema += caracterActual;
+                darSiguienteCaracter();
+
+                if (caracterActual == 'n') {
+                    lexema += caracterActual;
+                    darSiguienteCaracter();
+
+                    if (caracterActual == 'M') {
+                        lexema += caracterActual;
+                        darSiguienteCaracter();
+                        if (caracterActual == 'i') {
+                            lexema += caracterActual;
+                            darSiguienteCaracter();
+
+                            if (caracterActual == 'e') {
+                                lexema += caracterActual;
+                                darSiguienteCaracter();
+
+                                if (caracterActual == 'n') {
+                                    lexema += caracterActual;
+                                    darSiguienteCaracter();
+                                    if (caracterActual == 't') {
+                                        lexema += caracterActual;
+                                        darSiguienteCaracter();
+
+                                        if (caracterActual == 'r') {
+                                            lexema += caracterActual;
+                                            darSiguienteCaracter();
+                                            if (caracterActual == 'a') {
+                                                lexema += caracterActual;
+                                                darSiguienteCaracter();
+                                                if (caracterActual == 's') {
+                                                    lexema += caracterActual;
+                                                    almacenarSimbolo(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                                    darSiguienteCaracter();
+                                                } else {
+                                                    reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                                }
+                                            } else {
+                                                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                            }
+                                        } else {
+                                            reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                        }
+                                    } else {
+                                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                    }
+                                } else {
+                                    reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                                }
+                            } else {
+
+                                reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                            }
+                        } else {
+                            reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                        }
+                    } else {
+                        reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                    }
+
+                } else {
+                    reportarError(lexema, fila, columna, Categoria.TIPO_DATO_CARACTER);
+                }
+
+            } else {
+                hacerBacktracking(posInicial);
+                darSiguienteCaracter();
+            }
+
+        } else {
+            return false;
+        }
+        return true;
     }
 
     /*
@@ -549,7 +698,7 @@ public class AnalizadorLexico {
         while (Character.isDigit(caracterActual)) {
             lexema += caracterActual;
             darSiguienteCaracter();
-           
+
         }
 
         if (caracterActual == '.' || caracterActual == 'b') {
@@ -558,10 +707,9 @@ public class AnalizadorLexico {
 
         } else {
             almacenarSimbolo(lexema, fila, columna, Categoria.ENTERO);
-           
 
         }
-      return true;
+        return true;
     }
 
     /*
@@ -627,7 +775,7 @@ public class AnalizadorLexico {
             return false;
         }
 
-        while (!(caracterActual == ':' || caracterActual == finCodigo ||caracterActual ==10)) {
+        while (!(caracterActual == ':' || caracterActual == finCodigo || caracterActual == 10)) {
             lexema += caracterActual;
             darSiguienteCaracter();
         }
@@ -860,151 +1008,6 @@ public class AnalizadorLexico {
 
         return true;
     }
-    public boolean esCicloMientrasInicio() {
-        String lexema = "";
-        int fila = filActual;
-        int columna = colActual;
-        int pos = posInicial;
-
-        if (caracterActual == 'M') {
-            lexema += caracterActual;
-            darSiguienteCaracter();
-            if (caracterActual == 'i') {
-                lexema += caracterActual;
-                darSiguienteCaracter();
-                if (caracterActual == 'e') {
-                    lexema += caracterActual;
-                    darSiguienteCaracter();
-                    if (caracterActual == 'n') {
-                        lexema += caracterActual;
-                        darSiguienteCaracter();
-                        if (caracterActual == 't') {
-                            lexema += caracterActual;
-                            darSiguienteCaracter();
-                            if (caracterActual == 'r') {
-                                lexema += caracterActual;
-                                darSiguienteCaracter();
-                                if (caracterActual == 'a') {
-                                    lexema += caracterActual;
-                                    darSiguienteCaracter();
-                                    if (caracterActual == 's') {
-                                        lexema += caracterActual;
-                                        almacenarSimbolo(lexema, fila, columna, Categoria.INICIO_MIENTRAS);
-                                        darSiguienteCaracter();
-                                    } else {
-                                        reportarError(lexema, fila, columna, Categoria.INICIO_MIENTRAS);
-                                    }
-                                } else {
-                                    reportarError(lexema, fila, columna, Categoria.INICIO_MIENTRAS);
-                                }
-                            } else {
-                                reportarError(lexema, fila, columna, Categoria.INICIO_MIENTRAS);
-                            }
-                        } else {
-                            reportarError(lexema, fila, columna, Categoria.INICIO_MIENTRAS);
-                        }
-                    } else {
-                        reportarError(lexema, fila, columna, Categoria.INICIO_MIENTRAS);
-                    }
-                } else {
-                    reportarError(lexema, fila, columna, Categoria.INICIO_MIENTRAS);
-                }
-            } else {
-                reportarError(lexema, fila, columna, Categoria.INICIO_MIENTRAS);
-            }
-        } else {
-            return false;
-        }
-        return true;
-
-    }
-
-    public boolean esCicloMientrasFin() {
-        String lexema = "";
-        int fila = filActual;
-        int columna = colActual;
-        int pos = posInicial;
-
-        if (caracterActual == 'F') {
-            lexema += caracterActual;
-            darSiguienteCaracter();
-            if (caracterActual == 'i') {
-                lexema += caracterActual;
-                darSiguienteCaracter();
-
-                if (caracterActual == 'n') {
-                    lexema += caracterActual;
-                    darSiguienteCaracter();
-
-                    if (caracterActual == 'M') {
-                        lexema += caracterActual;
-                        darSiguienteCaracter();
-                        if (caracterActual == 'i') {
-                            lexema += caracterActual;
-                            darSiguienteCaracter();
-
-                            if (caracterActual == 'e') {
-                                lexema += caracterActual;
-                                darSiguienteCaracter();
-
-                                if (caracterActual == 'n') {
-                                    lexema += caracterActual;
-                                    darSiguienteCaracter();
-                                    if (caracterActual == 't') {
-                                        lexema += caracterActual;
-                                        darSiguienteCaracter();
-
-                                        if (caracterActual == 'r') {
-                                            lexema += caracterActual;
-                                            darSiguienteCaracter();
-                                            if (caracterActual == 'a') {
-                                                lexema += caracterActual;
-                                                darSiguienteCaracter();
-                                                if (caracterActual == 's') {
-                                                    lexema += caracterActual;
-                                                    almacenarSimbolo(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                                                    darSiguienteCaracter();
-                                                } else {
-                                                    reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                                                }
-                                            } else {
-                                                reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                                            }
-                                        } else {
-                                            reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                                        }
-                                    } else {
-                                        reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                                    }
-                                } else {
-                                    reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                                }
-                            } else {
-
-                                reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                            }
-                        } else {
-                            reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                        }
-                    } else {
-                        reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                    }
-
-                } else {
-                    reportarError(lexema, fila, columna, Categoria.FIN_MIENTRAS);
-                }
-
-            } else {
-                hacerBacktracking(posInicial);
-                darSiguienteCaracter();
-            }
-
-        } else {
-            return false;
-        }
-        return true;
-    }
-
 
     /*
     *Metodo que verifica si el caracter a analizar en un operador de asignacion
@@ -1344,7 +1347,7 @@ public class AnalizadorLexico {
         lexema += caracterActual;
         darSiguienteCaracter();
 
-        while (caracterActual != '\'' && caracterActual != '!' ) {
+        while (caracterActual != '\'' && caracterActual != '!') {
 
             if (caracterActual == ':') {
                 lexema += caracterActual;
@@ -1558,8 +1561,8 @@ public class AnalizadorLexico {
         }
         return true;
     }
-    
-    public boolean esPalabraReservadaHacer(){
+
+    public boolean esPalabraReservadaHacer() {
         String lexema = "";
         int fila = filActual;
         int columna = colActual;
@@ -1578,13 +1581,12 @@ public class AnalizadorLexico {
 
                     if (caracterActual == 'e') {
                         lexema += caracterActual;
-                         darSiguienteCaracter();
+                        darSiguienteCaracter();
                         if (caracterActual == 'r') {
                             lexema += caracterActual;
                             almacenarSimbolo(lexema, fila, columna, Categoria.PALABRA_RESERVADA_HACER);
                             darSiguienteCaracter();
 
-                            
                         } else {
                             reportarError(lexema, fila, columna, Categoria.PALABRA_RESERVADA_HACER);
                         }

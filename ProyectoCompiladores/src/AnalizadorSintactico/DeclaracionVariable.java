@@ -4,13 +4,13 @@ import AnalizadorLexico.Token;
 import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-public class DeclaracionCampo extends Sentencia {
+public class DeclaracionVariable extends Sentencia {
 
     
     private Token tipoDato;
     private ArrayList<Variable> listaIdentificadores;
 
-    public DeclaracionCampo( Token tipoDato, ArrayList<Variable> listaIdentificadores) {
+    public DeclaracionVariable( Token tipoDato, ArrayList<Variable> listaIdentificadores) {
         super();
         
         this.tipoDato = tipoDato;
