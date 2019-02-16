@@ -345,13 +345,12 @@ public class AnalizadorSintactico {
                             ArrayList<Sentencia> listaSentencias = esListaSentencia();
 
                             if (listaSentencias.size() > 0) {
-                                System.out.println("Estoy aqui");
+                                
                                 obtenerSiguienteToken();
                                 if (tokenActual.getLexema().equals("n")) {
-                                    System.out.println("Vea " + tokenActual.getLexema());
+                                    
                                     obtenerSiguienteToken();
                                     if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
-                                        System.out.println("EsFuncion");
                                         obtenerSiguienteToken();
                                         return new Funcion(identificador, tipoRetorno, listaSentencias);
                                     } else {
