@@ -23,7 +23,7 @@ class ExpresioAsignacion extends Expresion{
     @Override
     public DefaultMutableTreeNode getArbolVisual() {
         
-        return new  DefaultMutableTreeNode(variable.getIdentificador().getLexema()+": "+termino.toString());
+        return new  DefaultMutableTreeNode("Expresión de Asignación: "+variable.getIdentificador().getLexema()+": "+termino.toString());
     }
     
     

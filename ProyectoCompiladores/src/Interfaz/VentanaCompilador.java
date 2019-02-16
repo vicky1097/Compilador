@@ -161,10 +161,10 @@ public class VentanaCompilador extends javax.swing.JFrame {
 
         txtCodigoFuente.setColumns(20);
         txtCodigoFuente.setRows(5);
-        txtCodigoFuente.setText("F :sumar: entero ()\n:cadena: : 4 !\nn!");
+        txtCodigoFuente.setText("f :sumar: entero ()\nMientras 3 >>: 5 hacer\n:cadena: : 4 !\nFinMientras\n:gatos: : 5!\nn!");
         jScrollPane3.setViewportView(txtCodigoFuente);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 66, 610, 90));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 610, 90));
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {

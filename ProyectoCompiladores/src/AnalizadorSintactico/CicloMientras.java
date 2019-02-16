@@ -24,7 +24,17 @@ public class CicloMientras extends Sentencia {
 
     @Override
     public DefaultMutableTreeNode getArbolVisual() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("Ciclo Mientras");
+        nodo.add(new DefaultMutableTreeNode("Expresión Relacional: " + expresionRelacional.getTermino1().toString() + "" + expresionRelacional.getOperadorRelacional().getLexema() + "" + expresionRelacional.getTermino2().toString()));
+
+        DefaultMutableTreeNode sentencia = new DefaultMutableTreeNode("Sentencias");
+        nodo.add(sentencia);
+
+        for (Sentencia sent : listaSentencias) {
+            sentencia.add(sent.getArbolVisual());
+        }
+
+        return nodo;
     }
 
 }

@@ -69,7 +69,8 @@ public class Funcion {
 
     public DefaultMutableTreeNode getArbolVisual() {
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("Funcion");
-        nodo.add(new DefaultMutableTreeNode(identificador.getLexema() + " : " + tipoRetorno.getLexema()));
+        nodo.add(new DefaultMutableTreeNode("Nombre función: " + identificador.getLexema() ));
+        nodo.add(new DefaultMutableTreeNode("Tipo de Retorno: " +  tipoRetorno.getLexema()));
 
         if (NullPointerException.class.equals(listaParametros)) {
             DefaultMutableTreeNode params = new DefaultMutableTreeNode("Parametros");
@@ -83,6 +84,7 @@ public class Funcion {
 
         DefaultMutableTreeNode sentencias = new DefaultMutableTreeNode("Sentencias");
         nodo.add(sentencias);
+       
 
         for (Sentencia sentencia : listaSentencias) {
             sentencias.add(sentencia.getArbolVisual());
