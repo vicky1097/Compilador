@@ -25,9 +25,22 @@ class ExpresionRelacional extends Expresion{
         this.operadorRelacional = operadorRelacional;
     }
 
+    public Termino getTermino1() {
+        return termino1;
+    }
+
+    public Termino getTermino2() {
+        return termino2;
+    }
+
+    public Token getOperadorRelacional() {
+        return operadorRelacional;
+    }
+    
+
     @Override
     public DefaultMutableTreeNode getArbolVisual() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return new DefaultMutableTreeNode(termino1.toString() + " "+operadorRelacional +""+ termino2);
     }
 
 }

@@ -12,7 +12,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  *
  * @author Vicky
  */
-class CicloMientras extends Sentencia{
+class CicloMientras extends Sentencia {
 
     private ExpresionRelacional sentenciaRelacional;
     private ArrayList<Sentencia> listaSentencias;
@@ -24,7 +24,17 @@ class CicloMientras extends Sentencia{
 
     @Override
     public DefaultMutableTreeNode getArbolVisual() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("Ciclo Mientras");
+        nodo.add(new DefaultMutableTreeNode("Expresión Relacional: "+sentenciaRelacional.getTermino1().toString()+""+sentenciaRelacional.getOperadorRelacional().getLexema()+""+sentenciaRelacional.getTermino2().toString()));
+
+        DefaultMutableTreeNode sentencia = new DefaultMutableTreeNode("Sentencias");
+        nodo.add(sentencia);
+
+        for (Sentencia sent : listaSentencias) {
+            sentencia.add(sent.getArbolVisual());
+        }
+
+        return nodo;
     }
 
 }

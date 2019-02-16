@@ -13,6 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 abstract class  Expresion extends Sentencia{
     
+    @Override
     public abstract DefaultMutableTreeNode getArbolVisual();
 
 

@@ -260,16 +260,18 @@ public class AnalizadorSintactico {
         Variable variable = esVariable();
         if (variable != null) {
             obtenerSiguienteToken();
+            System.out.println("Exp Asi");
 
             if (tokenActual.getCategoria() == Categoria.OPERADOR_ASIGNACION) {
                 obtenerSiguienteToken();
                 Termino termino = esTermino();
-
+                System.out.println("OpSig" + tokenActual.getLexema());
                 if (termino != null) {
                     obtenerSiguienteToken();
 
                     if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
-
+                        obtenerSiguienteToken();
+                        System.out.println("" + tokenActual.getLexema());
                         return new ExpresioAsignacion(variable, termino);
                     }
                 }
@@ -302,7 +304,9 @@ public class AnalizadorSintactico {
     }
 
     public Funcion esFuncion() {
-        if (tokenActual.getLexema().equals("F")) {
+
+        if (tokenActual.getLexema().equals("f")) {
+
             obtenerSiguienteToken();
             if (tokenActual.getCategoria() == Categoria.IDENTIFICADOR) {
                 Token identificador = tokenActual;
@@ -313,22 +317,23 @@ public class AnalizadorSintactico {
                     obtenerSiguienteToken();
 
                     if (tokenActual.getCategoria() == Categoria.PARENTESIS_ABRIR) {
-                        System.out.println("abrir");
+
                         obtenerSiguienteToken();
                         ArrayList<Parametro> listaParametro = esListaParametro();
 
                         if (listaParametro.size() > 0) {
-                            System.out.println("para");
+
                             obtenerSiguienteToken();
                             if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
                                 obtenerSiguienteToken();
                                 ArrayList<Sentencia> listaSentencias = esListaSentencia();
                                 if (listaSentencias.size() > 0) {
                                     obtenerSiguienteToken();
+
                                     if (tokenActual.getLexema().equals("n")) {
                                         obtenerSiguienteToken();
                                         if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
-                                            System.out.println("EsFuncion");
+
                                             obtenerSiguienteToken();
                                             return new Funcion(identificador, tipoRetorno, listaParametro, listaSentencias);
                                         } else {
@@ -340,15 +345,16 @@ public class AnalizadorSintactico {
                             }
 
                         } else if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
-                            System.out.println("cerrar");
+
                             obtenerSiguienteToken();
                             ArrayList<Sentencia> listaSentencias = esListaSentencia();
 
                             if (listaSentencias.size() > 0) {
-                                
+
                                 obtenerSiguienteToken();
+                                System.out.println("token: " + tokenActual);
                                 if (tokenActual.getLexema().equals("n")) {
-                                    
+
                                     obtenerSiguienteToken();
                                     if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                                         obtenerSiguienteToken();
@@ -509,6 +515,7 @@ public class AnalizadorSintactico {
         int pos = posicionActual;
         Termino termino = esTermino();
         if (termino != null) {
+
             obtenerSiguienteToken();
 
             if (tokenActual.getCategoria() == Categoria.OPERADOR_RELACIONAL) {
@@ -516,6 +523,7 @@ public class AnalizadorSintactico {
                 obtenerSiguienteToken();
 
                 Termino termino1 = esTermino();
+
                 if (termino1 != null) {
                     return new ExpresionRelacional(termino, operadorRelacional, termino1);
                 } else {
@@ -533,7 +541,7 @@ public class AnalizadorSintactico {
             }
 
         } else {
-            reportarError("Falta un termino para completar la expresión relacional");
+            return null;
 
         }
         return null;
@@ -613,21 +621,23 @@ public class AnalizadorSintactico {
 
     public CicloMientras esCicloMientras() {
 
-        if (tokenActual.getCategoria()==Categoria.INICIO_MIENTRAS) {
+        if (tokenActual.getCategoria() == Categoria.INICIO_MIENTRAS) {
             obtenerSiguienteToken();
 
             ExpresionRelacional expresionRelacional = esExpresionRelacional();
             if (expresionRelacional != null) {
                 obtenerSiguienteToken();
 
-                if (tokenActual.getCategoria()==Categoria.PALABRA_RESERVADA_HACER) {
+                if (tokenActual.getCategoria() == Categoria.PALABRA_RESERVADA_HACER) {
                     obtenerSiguienteToken();
 
                     ArrayList<Sentencia> listaSentencias = esListaSentencia();
                     if (listaSentencias != null) {
-                        obtenerSiguienteToken();
+                        System.out.println("Aca estoy");
 
-                        if (tokenActual.getCategoria()==Categoria.FIN_MIENTRAS) {
+                        if (tokenActual.getCategoria() == Categoria.FIN_MIENTRAS) {
+                            obtenerSiguienteToken();
+                            System.out.println("Aca estoyb 2");
                             return new CicloMientras(expresionRelacional, listaSentencias);
                         }
 

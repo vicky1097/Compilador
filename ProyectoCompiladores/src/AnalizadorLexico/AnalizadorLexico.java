@@ -35,10 +35,7 @@ public class AnalizadorLexico {
             if (esComentarioBloque()) {
                 continue;
             }
-//            if (esPalabraReservada()) {
-//                System.out.println("3");
-//                continue;
-//            }
+
 
             if (esIdentificador()) {
                 continue;
@@ -552,7 +549,7 @@ public class AnalizadorLexico {
         while (Character.isDigit(caracterActual)) {
             lexema += caracterActual;
             darSiguienteCaracter();
-            System.out.println("llll");
+           
         }
 
         if (caracterActual == '.' || caracterActual == 'b') {
@@ -561,7 +558,7 @@ public class AnalizadorLexico {
 
         } else {
             almacenarSimbolo(lexema, fila, columna, Categoria.ENTERO);
-            darSiguienteCaracter();
+           
 
         }
       return true;
@@ -630,7 +627,7 @@ public class AnalizadorLexico {
             return false;
         }
 
-        while (!(caracterActual == ':' || caracterActual == finCodigo)) {
+        while (!(caracterActual == ':' || caracterActual == finCodigo ||caracterActual ==10)) {
             lexema += caracterActual;
             darSiguienteCaracter();
         }
@@ -1347,7 +1344,7 @@ public class AnalizadorLexico {
         lexema += caracterActual;
         darSiguienteCaracter();
 
-        while (caracterActual != '\'' && caracterActual != finCodigo) {
+        while (caracterActual != '\'' && caracterActual != '!' ) {
 
             if (caracterActual == ':') {
                 lexema += caracterActual;
