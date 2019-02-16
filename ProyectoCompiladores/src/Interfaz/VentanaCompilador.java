@@ -52,12 +52,16 @@ public class VentanaCompilador extends javax.swing.JFrame {
         tablaTokens = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tablaErrores = new javax.swing.JTable();
+        tablaErroresLexicos = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtCodigoFuente = new javax.swing.JTextArea();
         btnLimpiar = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTree_ArbolVisual = new javax.swing.JTree();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tablaErroresSintacticos = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -104,19 +108,21 @@ public class VentanaCompilador extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 680, 180));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tabla de Errores", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tabla de Errores Léxicos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        tablaErrores.setModel(new javax.swing.table.DefaultTableModel(
+        tablaErroresLexicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -132,7 +138,7 @@ public class VentanaCompilador extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tablaErrores);
+        jScrollPane2.setViewportView(tablaErroresLexicos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -140,15 +146,15 @@ public class VentanaCompilador extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 680, 160));
@@ -171,7 +177,41 @@ public class VentanaCompilador extends javax.swing.JFrame {
         jTree_ArbolVisual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPane4.setViewportView(jTree_ArbolVisual);
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 310, 490));
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, 310, 580));
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tabla Errores Sintácticos"));
+
+        tablaErroresSintacticos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Error Sintáctico....................................................................................................", "Fila", "Columna"
+            }
+        ));
+        jScrollPane5.setViewportView(tablaErroresSintacticos);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 680, 140));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Árbol Visual");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -184,9 +224,10 @@ public class VentanaCompilador extends javax.swing.JFrame {
 
             analizador.Analizar();
             agregarTablaTokens();
-            agregarTablaErrores();
+            agregarTablaErroresLexicos();
             analizadorSin = new AnalizadorSintactico(analizador.getTablaSimbolos());
             analizadorSin.analizar();
+            agregarTablaErroresSintacticos();
             
             
             
@@ -267,12 +308,12 @@ public class VentanaCompilador extends javax.swing.JFrame {
     //Metodo que borra todos los elementos de la tabla de errores
 
     public void limpiarTablaErrores() {
-        tablaErrores.setModel(new DefaultTableModel(null, new String[]{"Lexema", "Categoría", "Fila", "Columna"}));
+        tablaErroresLexicos.setModel(new DefaultTableModel(null, new String[]{"Lexema", "Categoría", "Fila", "Columna"}));
     }
 
     //Metodo que agrega los elementos a la tabla de errores
-    public void agregarTablaErrores() {
-        DefaultTableModel modelo = (DefaultTableModel) tablaErrores.getModel();
+    public void agregarTablaErroresLexicos() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaErroresLexicos.getModel();
 
         Object[] fila = new Object[4];
 
@@ -285,8 +326,26 @@ public class VentanaCompilador extends javax.swing.JFrame {
             modelo.addRow(fila);
 
         }
-        tablaErrores.setModel(modelo);
+        tablaErroresLexicos.setModel(modelo);
 
+    }
+    
+    public void agregarTablaErroresSintacticos(){
+        DefaultTableModel modelo = (DefaultTableModel) tablaErroresSintacticos.getModel();
+
+        Object[] fila = new Object[3];
+
+        for (int i = 0; i < analizadorSin.getTablaErrores().size(); i++) {
+            fila[1] = analizadorSin.getTablaErrores().get(i).getFila();
+            fila[2] = analizadorSin.getTablaErrores().get(i).getColumna();
+            fila[0]= analizadorSin.getTablaErrores().get(i).getMensaje();
+            
+
+            modelo.addRow(fila);
+
+        }
+        tablaErroresSintacticos.setModel(modelo);
+        
     }
 
 
@@ -295,14 +354,18 @@ public class VentanaCompilador extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTree jTree_ArbolVisual;
-    private javax.swing.JTable tablaErrores;
+    private javax.swing.JTable tablaErroresLexicos;
+    private javax.swing.JTable tablaErroresSintacticos;
     private javax.swing.JTable tablaTokens;
     private javax.swing.JTextArea txtCodigoFuente;
     // End of variables declaration//GEN-END:variables
