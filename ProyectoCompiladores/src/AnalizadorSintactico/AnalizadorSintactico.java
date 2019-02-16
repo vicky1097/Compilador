@@ -283,8 +283,12 @@ public class AnalizadorSintactico {
                     if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
 
                         return new ExpresioAsignacion(variable, termino);
+                    }else {
+                        reportarError("Falta fin de sentencia");
                     }
                 }
+            }else{
+                reportarError("Falta operador de asignacion");
             }
         }
         return null;
@@ -358,9 +362,15 @@ public class AnalizadorSintactico {
                                         } else {
                                             reportarError("Falta fin de sentencia");
                                         }
+                                    }else{
+                                        reportarError("Falta lexema n");
                                     }
+                                }else{
+                                    reportarError("Debe haber al menos una sentencia");
                                 }
 
+                            }else{
+                                reportarError("Falta parentesis izquierdo");
                             }
 
                         } else if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
@@ -381,14 +391,26 @@ public class AnalizadorSintactico {
                                     } else {
                                         reportarError("Falta fin de sentencia");
                                     }
+                                }else{
+                                    reportarError("Falta lexema n");
                                 }
+                            }else{
+                                reportarError("Debe haber al menos una sentencia");
                             }
 
+                        }else{
+                            reportarError("Falta parentesis izquierdo");
                         }
 
+                    }else{
+                        reportarError("Falta parentesis derecho");
                     }
 
+                }else{
+                    reportarError("Falta definir el tipo de retorno");
                 }
+            } else{
+                reportarError("Falta identificador de funcion");
             }
 
         }
