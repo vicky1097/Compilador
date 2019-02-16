@@ -12,13 +12,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
  *
  * @author Vicky
  */
-class CicloMientras extends Sentencia{
+public class CicloMientras extends Sentencia {
 
-    private ExpresionRelacional sentenciaRelacional;
+    private ExpresionRelacional expresionRelacional;
     private ArrayList<Sentencia> listaSentencias;
 
-    public CicloMientras(ExpresionRelacional sentenciaRelacional, ArrayList<Sentencia> listaSentencias) {
-        this.sentenciaRelacional = sentenciaRelacional;
+    public CicloMientras(ExpresionRelacional expresionRelacional, ArrayList<Sentencia> listaSentencias) {
+        this.expresionRelacional = expresionRelacional;
         this.listaSentencias = listaSentencias;
     }
 
