@@ -253,7 +253,7 @@
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="F :sumar: entero ()&#xa;:cadena: : 4 !&#xa;n!"/>
+            <Property name="text" type="java.lang.String" value="F :sumar: entero ()&#xa;Mientras 3 &gt;&gt;: 4 hacer&#xa;:cadena: : 4 !&#xa;FinMientras&#xa;n!"/>
           </Properties>
         </Component>
       </SubComponents>

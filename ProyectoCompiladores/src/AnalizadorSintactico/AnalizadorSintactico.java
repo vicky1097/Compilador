@@ -613,21 +613,21 @@ public class AnalizadorSintactico {
 
     public CicloMientras esCicloMientras() {
 
-        if (tokenActual.getLexema().equals("Mientras")) {
+        if (tokenActual.getCategoria()==Categoria.INICIO_MIENTRAS) {
             obtenerSiguienteToken();
 
             ExpresionRelacional expresionRelacional = esExpresionRelacional();
             if (expresionRelacional != null) {
                 obtenerSiguienteToken();
 
-                if (tokenActual.getLexema().equals("hacer")) {
+                if (tokenActual.getCategoria()==Categoria.PALABRA_RESERVADA_HACER) {
                     obtenerSiguienteToken();
 
                     ArrayList<Sentencia> listaSentencias = esListaSentencia();
                     if (listaSentencias != null) {
                         obtenerSiguienteToken();
 
-                        if (tokenActual.getLexema().equals("FinMientras")) {
+                        if (tokenActual.getCategoria()==Categoria.FIN_MIENTRAS) {
                             return new CicloMientras(expresionRelacional, listaSentencias);
                         }
 
