@@ -34,6 +34,9 @@ public class AnalizadorSintactico {
         if (ea != null) {
             return new UnidadDeCompilacion(ea);
         }
+        else {
+            reportarError("Falta al menos una función");
+        }
 
         return null;
     }
@@ -48,10 +51,19 @@ public class AnalizadorSintactico {
 
         DeclaracionVariable declaracionCampo = esDeclaracionVariable();
 
-        while (declaracionCampo != null) {
-            lista.add(declaracionCampo);
-            declaracionCampo = esDeclaracionVariable();
+        if(declaracionCampo != null)
+        {
+            while (declaracionCampo != null) {
+             lista.add(declaracionCampo);
+             declaracionCampo = esDeclaracionVariable();
+            }
         }
+        
+        
+        else {
+          reportarError("Debe haber al menos una declaracion");
+        }
+        
 
         return lista;
     }
@@ -452,6 +464,12 @@ public class AnalizadorSintactico {
                                 if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                                     return new Invocacion(listaArgumentos);
                                 }
+                                else{
+                                    reportarError("Falta fin de sentecia");
+                                }
+                            }
+                            else{
+                                reportarError("Falta parentesis izquierdo");
                             }
                         } else {
                             if (tokenActual.getCategoria() == Categoria.PARENTESIS_CERRAR) {
@@ -459,11 +477,25 @@ public class AnalizadorSintactico {
                                 if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                                     return new Invocacion();
                                 }
+                                else{
+                                    reportarError("Falta fin de sentecia");
+                                }
                             }
+                            else{
+                                reportarError("Falta parentesis izquierdo");
+                            }
+                            
                         }
+                    }else{
+                        reportarError("Falta parentesis derecho");
                     }
+                }else {
+                    reportarError("Falta identificador función");
                 }
+            }else {
+                reportarError("Falta Punto");
             }
+            
 
         }
         return null;
@@ -482,7 +514,11 @@ public class AnalizadorSintactico {
             if (tokenActual.getCategoria() == Categoria.IDENTIFICADOR) {
                 return new Parametro(tipo, tokenActual);
             }
+            else{
+                reportarError("Falata identificador del parametro");
+            }
         }
+        
         return null;
     }
 
@@ -504,6 +540,9 @@ public class AnalizadorSintactico {
                 listaSentencias.addAll(esListaSentencia());
             }
 
+        }
+        else{
+            reportarError("Debe haber al menos una sentencia");
         }
 
         return listaSentencias;
@@ -633,15 +672,24 @@ public class AnalizadorSintactico {
                                     if (tokenActual.getLexema().equals("FinSino")) {
                                         return new SentanciaDecision(expresionRelacional, listaSentencias, listaSentencia1);
                                     }
+                                    else{
+                                        reportarError("Falta finalizacion del Sino");
+                                    }
                                 }
                             }
 
+                        }
+                        else{
+                            reportarError("Falta finalizacion del Si");
                         }
 
                     }
 
                 }
+                reportarError("Falta palabra reservada \"hacer\"");
 
+            }else {
+                reportarError("Falta exprecion relacional");
             }
 
         }
@@ -671,10 +719,20 @@ public class AnalizadorSintactico {
 
                         if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                             return new ImprimirDato(termino);
+                        } else{
+                            reportarError("Falta fin de sentencia");
                         }
                     }
+                    else{
+                        reportarError("Falta parentesis izquierdo");
+                    }
 
+                } else{
+                    reportarError("Falta termino para imprimir");
                 }
+            }
+            else{
+                reportarError("Falta parentesis derecho");
             }
         }
 
@@ -705,11 +763,17 @@ public class AnalizadorSintactico {
 
                         if (tokenActual.getLexema().equals("FinMientras")) {
                             return new CicloMientras(expresionRelacional, listaSentencias);
+                        }else{
+                            reportarError("Falta finMientras");
                         }
 
                     }
+                }else{
+                    reportarError("Falata palabra reservada \"hacer\"");
                 }
 
+            } else{
+                reportarError("Falta exprecion relacional");
             }
 
         }
@@ -735,6 +799,11 @@ public class AnalizadorSintactico {
                 if (tokenActual.getCategoria() == Categoria.FIN_SENTENCIA) {
                     return new Retorno(termino);
                 }
+                else{
+                    reportarError("Falta fin de sentencia");
+                }
+            }else{
+                reportarError("Falta termino para retornar");
             }
 
         }
@@ -759,7 +828,11 @@ public class AnalizadorSintactico {
                 if (tokenActual.getLexema().equals("leer")) {
                     return new LeerDato(identificador);
 
+                }else{
+                    reportarError("Falta palabra reservada leer");
                 }
+            }else{
+                reportarError("Falta punto");
             }
 
         }
@@ -776,11 +849,17 @@ public class AnalizadorSintactico {
         ArrayList<Funcion> listaFunciones = new ArrayList<>();
 
         Funcion funcion = esFuncion();
-
-        while (funcion != null) {
+        if(funcion != null){
+             while (funcion != null) {
             listaFunciones.add(funcion);
             funcion = esFuncion();
         }
+        }
+        else{
+            reportarError("Febe haber al menos una funcion");
+        }
+
+        
 
         return listaFunciones;
     }
@@ -800,7 +879,11 @@ public class AnalizadorSintactico {
                 if (termino != null) {
                     return new Argumento(identificador, termino);
 
+                }else{
+                    reportarError("Falta termino");
                 }
+            }else{
+                reportarError("Falta operador Asignacion");
             }
         }
         return null;
