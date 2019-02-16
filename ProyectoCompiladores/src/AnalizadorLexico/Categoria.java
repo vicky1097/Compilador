@@ -37,4 +37,5 @@ public enum Categoria {
     FIN_MIENTRAS,
      DESCONOCIDO;
 
+
 }

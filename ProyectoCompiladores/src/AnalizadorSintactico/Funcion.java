@@ -68,7 +68,6 @@ public class Funcion {
     }
 
     public DefaultMutableTreeNode getArbolVisual() {
-
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("Funcion");
         nodo.add(new DefaultMutableTreeNode("Nombre función: " + identificador.getLexema() ));
         nodo.add(new DefaultMutableTreeNode("Tipo de Retorno: " +  tipoRetorno.getLexema()));
